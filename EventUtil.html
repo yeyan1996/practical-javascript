@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>绑定弹出警告框的事件处理程序</div>
+<a href="http://baidu.com">阻止默认行为</a>
+<button>取消a标签事件处理程序</button>
+<p>获取事件对象target</p>
+</body>
+<script type="module">
+    import EventUtil from './EventUtil.js'
+
+    let div = document.querySelector('div')
+    let a = document.querySelector('a')
+    let button = document.querySelector('button')
+    let p = document.querySelector('p')
+
+    function addHandler() {
+        alert(1)
+    }
+
+    function removeHandler(e) {
+        let event = EventUtil.getEvent(e)
+        EventUtil.preventDefault(event)
+    }
+
+    function preventDefault() {
+        EventUtil.removeHandler(a, 'click', prevent)
+    }
+
+    function getTarget(e) {
+        let event = EventUtil.getEvent(e)
+        console.log(EventUtil.getTarget(event))
+    }
+
+    EventUtil.addHandler(div, 'click', addHandler)
+    EventUtil.addHandler(a, 'click', preventDefault)
+    EventUtil.addHandler(button, 'click', removeHandler)
+    EventUtil.addHandler(p, 'click', getTarget)
+</script>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="module">
+    import CookieUtil from './CookieUtil.js'
+
+    let now = new Date()
+    let tomorrow = new Date(now.getTime() + 1000 * 60 * 60 * 24)
+    CookieUtil.set('userId', '001', tomorrow)
+    let value = CookieUtil.get('userId')
+    console.log(value)
+    CookieUtil.unset('userId')
+    value = CookieUtil.get('userId')
+    console.log(value)
+
+</script>
+</body>
+</html>
