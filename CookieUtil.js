@@ -1,8 +1,9 @@
 const CookieUtil = {
 
     /**
-     * @method get 查询cookie
-     * @param {String} name 查询的cookie名字
+     * @description 查询cookie
+     * @function get
+     * @param {String} name -查询的cookie名字
     **/
 
     get: function (name) {
@@ -21,13 +22,14 @@ const CookieUtil = {
     },
 
     /**
-     * @method set 设置cookie
-     * @param {String} name cookie键
-     * @param {String} value cookie值
-     * @param {Date} expires 到期时间
-     * @param {String} path 路径
-     * @param {String} domain 有效域名
-     * @param {Boolean} secure 安全标志
+     * @description 设置cookie
+     * @function set
+     * @param {String} name -cookie键
+     * @param {String} value -cookie值
+     * @param {Date} expires -到期时间
+     * @param {String} path -路径
+     * @param {String} domain -有效域名
+     * @param {Boolean} secure -安全标志
      **/
 
     set: function (name, value, expires, path, domain, secure) {
@@ -48,11 +50,12 @@ const CookieUtil = {
     },
 
     /**
-     * @method unset 删除cookie
-     * @param {String} name cookie键
-     * @param {String} path 路径
-     * @param {String} domain 有效域名
-     * @param {Boolean} secure 安全标志
+     * @description 删除cookie
+     * @function unset
+     * @param {String} name -cookie键
+     * @param {String} path -路径
+     * @param {String} domain -有效域名
+     * @param {Boolean} secure -安全标志
      *
     **/
 
@@ -60,5 +63,4 @@ const CookieUtil = {
         this.set(name, '', new Date(0), path, domain, secure)
     }
 }
-
 export default CookieUtil

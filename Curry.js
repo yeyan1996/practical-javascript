@@ -1,8 +1,9 @@
 /**
- * @method Curry 函数柯里化（创建已经设置好一个或多个参数的函数）
- * @param {Function} func 柯里化的函数
- * @param {*} [rest] 柯里化函数需要设置的参数
- * @return {Function} 柯里化后的函数
+ * @description 函数柯里化（创建已经设置好一个或多个参数的函数）
+ * @function Curry
+ * @param {Function} func -柯里化的函数
+ * @param {*} [rest] -柯里化函数需要设置的参数
+ * @return {Function} -柯里化后的函数
 **/
 
 function Curry(func,...rest) {

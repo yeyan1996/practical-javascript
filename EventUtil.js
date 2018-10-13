@@ -1,10 +1,11 @@
 const EventUtil = {
 
     /**
-     * @method addHandler 添加事件处理程序
-     * @param {Object} element 操作的元素节点
-     * @param {String} type 事件名称
-     * @param {Function} handler 事件处理函数
+     * @description 添加事件处理程序
+     * @function addHandler
+     * @param {Object} element -操作的元素节点
+     * @param {String} type -事件名称
+     * @param {Function} handler -事件处理函数
      **/
 
     addHandler: function (element, type, handler) {
@@ -18,10 +19,11 @@ const EventUtil = {
     },
 
     /**
-     * @method removeHandler 删除事件处理程序
-     * @param {Object} element 操作的元素节点
-     * @param {String} type 事件名称
-     * @param {Function} handler 事件处理函数
+     * @description 删除事件处理程序
+     * @function removeHandler
+     * @param {Object} element -操作的元素节点
+     * @param {String} type -事件名称
+     * @param {Function} handler -事件处理函数
      **/
 
     removeHandler: function (element, type, handler) {
@@ -35,9 +37,10 @@ const EventUtil = {
     },
 
     /**
-     * @method getEvent 获取事件对象
-     * @param {Object} event 事件对象
-     * @return {Object} 跨浏览器事件对象
+     * @description 获取事件对象
+     * @function getEvent
+     * @param {Object} event -事件对象
+     * @return {Object} -跨浏览器事件对象
      **/
 
     getEvent: function (event) {
@@ -45,9 +48,10 @@ const EventUtil = {
     },
 
     /**
-     * @method getTarget 获取target属性
-     * @param {Object} event 事件对象
-     * @return {Object} 跨浏览器事件对象的target属性
+     * @description 获取target属性
+     * @function getTarget
+     * @param {Object} event -事件对象
+     * @return {Object} -跨浏览器事件对象的target属性
      **/
 
     getTarget: function (event) {
@@ -55,7 +59,8 @@ const EventUtil = {
     },
 
     /**
-     * @method preventDefault 跨浏览器阻止默认行为
+     * @description 跨浏览器阻止默认行为
+     * @function preventDefault
      * @param {Object} event 事件对象
      **/
 
@@ -68,8 +73,9 @@ const EventUtil = {
     },
 
     /**
-     * @method stopPropagation 跨浏览器阻止冒泡
-     * @param {Object} event 事件对象
+     * @description 跨浏览器阻止冒泡
+     * @function stopPropagation
+     * @param {Object} event -事件对象
      **/
 
     stopPropagation: function (event) {
