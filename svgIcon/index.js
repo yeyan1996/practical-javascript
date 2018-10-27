@@ -1,7 +1,9 @@
 /**
  * @description 全局挂载svg-icon组件（需要配合iconfont.js）
  * @example
- * Vue.use(svg-icon)
+ * //main.js
+ * import svgIcon from './index.js'
+ * Vue.use(SvgIcon)
  * <svg-icon :svgName="dog" :svgClass="icon_dog"></svg-icon>
 **/
 import svgIcon from './svgIcon'
