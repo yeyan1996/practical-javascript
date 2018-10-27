@@ -2,8 +2,10 @@
  * @typedef {Object} UploadOptions
  * @param {String} url -路径
  * @param {String} path -图片路径
- * @param {Number} index -下标
-**/
+ * @param {String} name -文件对应的 key
+ * @param {Object} [header={ "Content-Type": "multipart/form-data"}] -HTTP 请求 Header，Header 中不能设置 Referer
+ * @param {Object} [formData] -HTTP 请求中其他额外的 form data
+ **/
 
 /**
  * @description 上传功能
@@ -11,18 +13,20 @@
  * @param {UploadOptions} options
  * @return {Promise}
  **/
-export function uploadFile({url,path,index}) {
+export function uploadFile({
+                               url,
+                               path,
+                               name,
+                               header = {"Content-Type": "multipart/form-data"},
+                               formData
+                           }) {
     return new Promise(function (resolve, reject) {
         wx.uploadFile({
             url: url,
             filePath: path,
-            name: "file",
-            formData: {
-                "fileIndex": index,
-            },
-            header: {
-                "Content-Type": "multipart/form-data"
-            },
+            name: name,
+            header,
+            formData,
             success: (res) => {
                 resolve(res);
             },
@@ -34,7 +38,42 @@ export function uploadFile({url,path,index}) {
 }
 
 /**
- * @description 获取登录凭证
+ * @typedef {Object} ChooseImgOptions
+ * @param {Number} [count=9] -选择图片数量最大9
+ * @param {Array} [sizeType=['original', 'compressed']] -所选的图片的尺寸
+ * @param {Array} [sourceType=['album', 'camera']] -选择图片的来源
+ **/
+
+/**
+ * @description 选择图片
+ * @function chooseImage
+ * @param {ChooseImgOptions} options -选择图片的配置
+ * @return {Promise} 返回resolve值为选择图片信息组成的对象的Promise实例
+ **/
+
+export function chooseImage({
+                                count = 9,
+                                sizeType = ['original', 'compressed'],
+                                sourceType = ['album', 'camera']
+                            }) {
+    return new Promise((resolve, reject) => {
+        wx.chooseImage({
+            count: count || 9,
+            sizeType: sizeType || ['original', 'compressed'],
+            sourceType: sourceType || ['album', 'camera'],
+            success: (res) => {
+                resolve(res)
+            },
+            fail: (e) => {
+                reject(e)
+            }
+        })
+    })
+}
+
+
+/**
+ * @description 获取登录凭证（code）
  * @function login
  * @return {Promise} 返回一个resolve值为登录凭证的Promise实例
  **/
@@ -60,7 +99,7 @@ export function login() {
  * @param {String} [showCancel=false] -是否显示取消按钮
  * @param {Boolean} [cancelText='取消'] -取消按钮的文字
  * @param {String} [confirmText='确定'] -确认按钮的文字
-**/
+ **/
 
 
 /**
@@ -68,31 +107,21 @@ export function login() {
  * @function showModal
  * @param {ModalOptions} [Options] -配置参数
  * @return {Promise} Promise实例
- * @example
- * async function func() {
-  try {
-    await showModal('重新登录')
-    //用户点击确认后才执行以下操作,否则进入catch子句
-     await login()
-  } catch (e) {
-    console.log(e)
-  }
-}
  **/
 
 export function showModal({
-        title='提示',
-        content='这是一个模态框',
-        showCancel=true,
-        cancelText='取消',
-        confirmText='确定'
-    }) {
+                              title = '提示',
+                              content = '这是一个模态框',
+                              showCancel = true,
+                              cancelText = '取消',
+                              confirmText = '确定'
+                          }) {
     return new Promise((resolve, reject) => {
         wx.showModal({
             title: title,
             content: content,
             showCancel: showCancel,
-            cancelText:cancelText,
+            cancelText: cancelText,
             confirmText: confirmText,
             success: (res) => {
                 if (res.confirm) {
@@ -136,7 +165,7 @@ export function getSetting() {
  **/
 
 export function authorize(scope) {
-    if(!scope){
+    if (!scope) {
         throw new TypeError('必须传入scope参数')
     }
     return new Promise((resolve, reject) => {
@@ -163,30 +192,6 @@ export function getUserInfo(withCredentials) {
     return new Promise((resolve, reject) => {
         wx.getUserInfo({
             withCredentials: withCredentials || false,
-            success: (res) => {
-                resolve(res)
-            },
-            fail: (e) => {
-                reject(e)
-            }
-        })
-    })
-}
-
-
-/**
- * @description 选择图片
- * @function chooseImage
- * @param {Object} options -选择图片的配置,见微信官网
- * @return {Promise} 返回resolve值为选择图片信息组成的对象的Promise实例
- **/
-
-export function chooseImage(options) {
-    return new Promise((resolve, reject) => {
-        wx.chooseImage({
-            count: options.count || 9,
-            sizeType: options.sizeType || ['original', 'compressed'],
-            sourceType: options.sourceType || ['album', 'camera'],
             success: (res) => {
                 resolve(res)
             },
