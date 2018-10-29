@@ -1,18 +1,19 @@
 /**
  * @description 函数节流
  * @function Throttle
- * @param {Function} func -节流的函数
+ * @param {Function} func -需要函数节流的函数
  * @param {Object} context -函数作用域
  * @param {Number} time -延迟时间
  * @return {Function} -经过节流处理的函数
-**/
+ **/
 
 export default  function Throttle(func,context,time) {
-    let timer = null
+    let previous = 0
     return function () {
-        if(timer){
-            clearTimeout(timer)
-        }
-        timer = setTimeout(()=>{console.log(1)},time)
+       let now = (new Date()).getTime()
+      if(now - previous > time){
+            func.apply(context,arguments)
+          previous = now
+      }
     }
 }

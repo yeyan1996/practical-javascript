@@ -130,12 +130,13 @@
     <div class="child"></div>
 </div>
 
+
 <script type="module">
-    import Throttle from './Throttle.js'
+    import Debounce from './Debounce.js'
     function handler() {
         console.log(1)
     }
-    window.addEventListener('scroll',Throttle(handler,null,1000))
+    window.addEventListener('scroll',Debounce(handler,null,500))
 </script>
 </body>
 </html>
