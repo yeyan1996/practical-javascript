@@ -1,7 +1,7 @@
 /**
  * @typedef {Object} UploadOptions
  * @param {String} url -路径
- * @param {String} path -图片路径
+ * @param {String} filePath -图片路径
  * @param {String} name -文件对应的 key
  * @param {Object} [header={ "Content-Type": "multipart/form-data"}] -HTTP 请求 Header，Header 中不能设置 Referer
  * @param {Object} [formData] -HTTP 请求中其他额外的 form data
@@ -15,16 +15,16 @@
  **/
 export function uploadFile({
                                url,
-                               path,
+                               filePath,
                                name,
                                header = {"Content-Type": "multipart/form-data"},
                                formData
                            }) {
     return new Promise(function (resolve, reject) {
         wx.uploadFile({
-            url: url,
-            filePath: path,
-            name: name,
+            url,
+            filePath,
+            name,
             header,
             formData,
             success: (res) => {
@@ -58,9 +58,9 @@ export function chooseImage({
                             }) {
     return new Promise((resolve, reject) => {
         wx.chooseImage({
-            count: count || 9,
-            sizeType: sizeType || ['original', 'compressed'],
-            sourceType: sourceType || ['album', 'camera'],
+            count,
+            sizeType,
+            sourceType,
             success: (res) => {
                 resolve(res)
             },
@@ -118,11 +118,11 @@ export function showModal({
                           }) {
     return new Promise((resolve, reject) => {
         wx.showModal({
-            title: title,
-            content: content,
-            showCancel: showCancel,
-            cancelText: cancelText,
-            confirmText: confirmText,
+            title,
+            content,
+            showCancel,
+            cancelText,
+            confirmText,
             success: (res) => {
                 if (res.confirm) {
                     resolve()
@@ -188,10 +188,10 @@ export function authorize(scope) {
  * @return {Promise} 返回resolve值为用户信息对象的Promise实例
  **/
 
-export function getUserInfo(withCredentials) {
+export function getUserInfo(withCredentials = false) {
     return new Promise((resolve, reject) => {
         wx.getUserInfo({
-            withCredentials: withCredentials || false,
+            withCredentials,
             success: (res) => {
                 resolve(res)
             },
