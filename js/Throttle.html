@@ -10,12 +10,19 @@
             background: red;
             display: flex;
             flex-wrap: wrap;
+            overflow: auto;
         }
         .child{
             border: 1px solid #00B7FF;
             height:100px;
             width:100px;
             background: gold;
+        }
+        .mouse_move{
+            display: inline-block;
+            background: blue;
+            width:500px;
+            height:500px;
         }
     </style>
 </head>
@@ -130,12 +137,20 @@
     <div class="child"></div>
 </div>
 
+<div class="mouse_move"></div>
+
 <script type="module">
-    import Throttle from './Throttle.js'
+    import {Throttle1} from './Throttle.js'
+    import {Throttle2} from './Throttle.js'
     function handler() {
         console.log(1)
     }
-    window.addEventListener('scroll',Throttle(handler,null,1000))
+    let scrollElement = document.querySelector('#red')
+    scrollElement.addEventListener('scroll',Throttle1(handler,null,1000))
+
+    let mousemoveElement = document.querySelector('.mouse_move')
+    mousemoveElement.addEventListener('mousemove',Throttle2(handler,null,1000))
+
 </script>
 </body>
 </html>

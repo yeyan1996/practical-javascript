@@ -2,7 +2,7 @@
  * @typedef {Object} UploadOptions
  * @param {String} url -路径
  * @param {String} filePath -图片路径
- * @param {String} name -文件对应的 key
+ * @param {String} [name=file] -文件对应的 key
  * @param {Object} [header={ "Content-Type": "multipart/form-data"}] -HTTP 请求 Header，Header 中不能设置 Referer
  * @param {Object} [formData] -HTTP 请求中其他额外的 form data
  **/
@@ -16,7 +16,7 @@
 export function uploadFile({
                                url,
                                filePath,
-                               name,
+                               name='file',
                                header = {"Content-Type": "multipart/form-data"},
                                formData
                            }) {
