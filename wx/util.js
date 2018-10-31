@@ -47,20 +47,20 @@ export function uploadFile({
 /**
  * @description 选择图片
  * @function chooseImage
- * @param {ChooseImgOptions} options -选择图片的配置
+ * @param {Object} options -选择图片的配置
  * @return {Promise} 返回resolve值为选择图片信息组成的对象的Promise实例
  **/
 
-export function chooseImage({
-                                count = 9,
-                                sizeType = ['original', 'compressed'],
-                                sourceType = ['album', 'camera']
-                            }) {
+export function chooseImage(options = {
+    count : 9,
+    sizeType : ['original', 'compressed'],
+    sourceType : ['album', 'camera']
+}) {
     return new Promise((resolve, reject) => {
         wx.chooseImage({
-            count,
-            sizeType,
-            sourceType,
+            count:options.count,
+            sizeType:options.sizeType,
+            sourceType:options.sourceType,
             success: (res) => {
                 resolve(res)
             },
@@ -203,18 +203,22 @@ export function getUserInfo(withCredentials = false) {
 }
 
 
+
 /**
  * @description 显示loading图
  * @function showLoading
- * @param {Object} options -loading的配置,见微信官网
+ * @param {Object} [options={'title':'加载中'，mask:false}] loading的配置
  * @return {Promise} 返回Promise实例
  **/
 
-export function showLoading(options) {
+export function showLoading(options={
+    title :'加载中',
+    mask : false
+}) {
     return new Promise((resolve, reject) => {
         wx.showLoading({
-            title: options.title || '加载中',
-            mask: options.mask || false,
+            title:options.title,
+            mask:options.mask,
             success: (res) => {
                 resolve(res)
             },
