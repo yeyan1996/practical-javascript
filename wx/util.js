@@ -48,7 +48,7 @@ export function uploadFile({
  * @description 选择图片
  * @function chooseImage
  * @param {Object} options -选择图片的配置
- * @return {Promise} 返回resolve值为选择图片信息组成的对象的Promise实例
+ * @return {Promise} 返回resolve值为选择图片信息组成的对象的Promise实例,用户退出选择图片界面会reject
  **/
 
 export function chooseImage(options = {
