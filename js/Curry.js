@@ -28,15 +28,15 @@ let curriedAdd = Curry1(add, 2, 3)
 function Curry2(fn) {
     let args = []
     return function next() {
-            //    debugger
-            if (arguments.length) {
-                args.push(...arguments)
+        //    debugger
+        if (arguments.length) {
+            args.push(...arguments)
             return next
         } else {
             console.log(...args);
-           return fn(...args)
+            return fn(...args)
         }
-  }
+    }
 }
 
 function add2(num1, num2, num3) {
@@ -64,4 +64,4 @@ function Curry3(fn) {
 
 const add3 = (a, b, c) => a + b + c;
 const curriedAdd3 = Curry3(add2);
-console.log(curriedAdd3(5, 6)(7));
+console.log(curriedAdd3(5)(6)(7));
