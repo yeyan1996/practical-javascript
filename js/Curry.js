@@ -20,7 +20,7 @@ function add(num1, num2) {
 let curriedAdd = Curry1(add, 2, 3)
 
 /**
- * @description 函数柯里化1（ 创建已经设置好一个或多个参数的函数）
+ * @description 函数柯里化2
  * @function Curry2
  * @param {*} fn -柯里化的函数
  * @returns {function} -柯里化后的函数
