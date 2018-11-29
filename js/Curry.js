@@ -22,7 +22,7 @@ let curriedAdd = Curry1(add, 2, 3)
 /**
  * @description 函数柯里化2
  * @function Curry2
- * @param {*} fn -柯里化的函数
+ * @param {function} fn -柯里化的函数
  * @returns {function} -柯里化后的函数
  */
 function Curry2(fn) {
@@ -52,7 +52,7 @@ console.log(curriedAdd2(1)(2)(3)());
 /**
  * @description 函数柯里化3
  * @function Curry2
- * @param {*} fn -柯里化的函数
+ * @param {function} fn -柯里化的函数
  */
 function Curry3(fn) {
     if (fn.length <= 1) return fn;
