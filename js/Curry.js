@@ -17,7 +17,8 @@ function add(num1, num2) {
     return num1 + num2
 }
 
-let curriedAdd = Curry1(add, 2, 3)
+let curriedAdd = Curry1(add, 2)
+console.log(curriedAdd(3))
 
 /**
  * @description 函数柯里化2（根据柯里化后的函数执行多少次判断函数的结果）
@@ -61,13 +62,13 @@ function Curry3(fn) {
             }
         } else {
           return  fn(...args)
-    };
+    }
 }
 
 
 return generator([], fn.length);
-};
+}
 
 const add3 = (a, b, c) => a + b + c;
-const curriedAdd3 = Curry3(add2);
+const curriedAdd3 = Curry3(add3);
 console.log(curriedAdd3(5)(6)(7));
