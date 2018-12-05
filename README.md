@@ -1,2 +1,2 @@
-# util
-JavaScript
+# JavaScript
+some skill about JavaScript
