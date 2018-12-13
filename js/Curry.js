@@ -63,7 +63,7 @@ console.log(curriedAdd3(8)(9)(10));
  * @description 偏函数（创建已经设置好一个或多个参数的函数）
  * @function partial
  * @param {Function} func -部分求值的函数
- * @param {*} [rest1] -部分求值的参数
+ * @param {...*} [rest1] -部分求值的参数
  * @return {Function} -部分求值后的函数
  **/
 
