@@ -55,8 +55,8 @@ const Curry3 = (fn) => {
 };
 
 
-const curriedAdd4 = Curry3(add2);
-console.log(curriedAdd4(8)(9)(10));
+const curriedAdd3 = Curry3(add2);
+console.log(curriedAdd3(8)(9)(10));
 
 
 /**
