@@ -12,6 +12,7 @@ function Person(name, sex) {
     this.sex = sex
 }
 
+
 let newPerson = new Person('zhl','male')
 let selfNewPerson =  selfNew(Person, 'zhl', 'male')
 
