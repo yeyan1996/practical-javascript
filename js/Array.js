@@ -41,41 +41,20 @@ arr2 = arr2.selfFilter(function (item) {
 console.log(arr2)
 
 
+// reduce实现ES6的Array.prototype.flat(Infinity)
+let arr3 = [1, 2, [3, 4, [5, 6, 7, 8], 9], 10, 11, 12, [13, 14]]
 
+function selfFlat(array) {
+    return array.reduce((acc,cur)=>{
+        if(Array.isArray(cur)){
+            return [...acc,...selfFlat(cur)]
+        }else{
+            return [...acc,cur]
+        }
+    },[])
+}
 
+//剪头函数简写
+let selfFlat2 = array => array.reduce((acc, cur) => (Array.isArray(cur) ? [...acc, ...selfFlat(cur)] : [...acc, cur]), [])
 
-
-// const selfReduce = function (fn, initialValue) {
-//     if (Object.prototype.toString.call(this) !== '[object Array]') throw new TypeError('not Array')
-//     let i = 0
-//     let reducedValue;
-//     let that = this
-//     const next = function (acc, cur, index, Array) {
-//         let arr = [...that]
-//         let first = arr[0]
-//         if (initialValue){
-//             first = initialValue
-//             reducedValue = fn.apply(null, [first, arr[i], i, that])
-//         }else{
-//             reducedValue = fn.apply(null, [first, arr[i + 1], i, that])
-//         }
-//         i++
-//         if (i < arr.length) {
-//             console.log(reducedValue)
-//             next(reducedValue, arr[i + 1], i + 1, that)
-//         } else {
-//             return reducedValue
-//         }
-//     }
-//     return next()
-// }
-//
-// !Array.prototype.selfReduce ? Array.prototype.selfReduce = selfReduce : null
-//
-// let arr3= [1, 2, 3]
-//
-// arr3 = arr3.selfReduce(function (acc,cur) {
-//     return acc + cur
-// })
-//
-// console.log(arr3)
+console.log(selfFlat2(arr3))
