@@ -1,6 +1,14 @@
+function selfIsArray(obj) {
+    let stringType = Object.prototype.toString.call(obj)
+    let index = stringType.indexOf("]")
+    return stringType.slice(8,index) === 'Array'
+}
+
+Array.selfIsArray || (Array.selfIsArray = selfIsArray)
+
 //ES3实现map
 const selfMap = function (fn, context) {
-    if (!Array.isArray(this)) throw new TypeError('not Array')
+    if (!Array.selfIsArray(this)) throw new TypeError('not Array')
     let arr = [...this]
     let mappedArr = []
     for (let i = 0; i < arr.length; i++) {
@@ -21,7 +29,7 @@ console.log(arr)
 
 //ES3实现filter
 const selfFilter = function (fn, context) {
-    if (!Array.isArray(this)) throw new TypeError('not Array')
+    if (!Array.selfIsArray(this)) throw new TypeError('not Array')
     let arr = [...this]
     let filteredArr = []
     for (let i = 0; i < arr.length; i++) {
@@ -46,7 +54,7 @@ let arr3 = [1, 2, [3, 4, [5, 6, 7, 8], 9], 10, 11, 12, [13, 14]]
 
 function selfFlat(array) {
     return array.reduce((acc,cur)=>{
-        if(Array.isArray(cur)){
+        if(Array.selfIsArray(cur)){
             return [...acc,...selfFlat(cur)]
         }else{
             return [...acc,cur]
@@ -55,6 +63,6 @@ function selfFlat(array) {
 }
 
 //剪头函数简写
-let selfFlat2 = array => array.reduce((acc, cur) => (Array.isArray(cur) ? [...acc, ...selfFlat(cur)] : [...acc, cur]), [])
+let selfFlat2 = array => array.reduce((acc, cur) => (Array.selfIsArray(cur) ? [...acc, ...selfFlat(cur)] : [...acc, cur]), [])
 
 console.log(selfFlat2(arr3))
