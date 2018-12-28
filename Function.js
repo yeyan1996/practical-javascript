@@ -23,23 +23,38 @@ const selfBind = function (bindTarget, ...args1) {
 
 Function.prototype.selfBind || (Function.prototype.selfBind = selfBind)
 
-function func(a, b) {
+function func() {
     this.name = 'yeyan1996'
 }
 
-let person = {
+let example = {
     age: 22
 }
 
-let boundFunc = func.selfBind(person)
-console.log(Object.getOwnPropertyDescriptors(func))
-console.dir(func)
-console.dir(boundFunc)
-
+let boundFunc = func.selfBind(example)
 
 boundFunc()
-console.log(person)
+console.log(example)
 
 let x = new boundFunc()
 console.log(x)
+
+
+//selfCall
+const selfCall = function (context, ...args) {
+    let func = this
+    context || (context = window)
+    if (typeof func !== 'function') throw new TypeError('this is not function')
+    let fn = Symbol('fn')
+    context[fn] = func
+    let res = context[fn](...args)
+    delete context[fn]
+    return res
+}
+
+Function.prototype.selfCall || (Function.prototype.selfCall = selfCall)
+
+let example2 = {a: 1}
+func.selfCall(example2)
+console.log(example2)
 
