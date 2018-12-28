@@ -1,5 +1,5 @@
 const isComplexDataType = obj => {
-     return (typeof obj === 'object' || typeof obj === 'function') && obj !== null
+     return (typeof obj === 'object' || typeof obj === 'function') && (obj !== null)
 }
 const selfNew = function (fn, ...rest) {
     let instance = Object.create(fn.prototype)
