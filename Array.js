@@ -1,10 +1,17 @@
-function selfIsArray(obj) {
-    let stringType = Object.prototype.toString.call(obj)
+const isType = type => target => {
+    let stringType = Object.prototype.toString.call(target)
     let index = stringType.indexOf("]")
-    return stringType.slice(8,index) === 'Array'
+    return stringType.slice(8, index) === type
 }
 
-Array.selfIsArray || (Array.selfIsArray = selfIsArray)
+const selfIsArray = isType('Array')
+
+Array.selfIsArray || (Object.defineProperty(Array, 'selfIsArray', {
+    value: selfIsArray,
+    enumerable: false,
+    configurable: true,
+    writable: true
+}))
 
 //ES3实现map
 const selfMap = function (fn, context) {
@@ -17,7 +24,7 @@ const selfMap = function (fn, context) {
     return mappedArr
 }
 
-!Array.prototype.selfMap ? Array.prototype.selfMap = selfMap : null
+Array.prototype.selfMap || (Array.prototype.selfMap = selfMap)
 
 let arr = ['z', 'h', 'l']
 
@@ -38,7 +45,13 @@ const selfFilter = function (fn, context) {
     return filteredArr
 }
 
-!Array.prototype.selfFilter ? Array.prototype.selfFilter = selfFilter : null
+
+Array.prototype.selfFilter || (Object.defineProperty(Array.prototype, 'selfFilter', {
+    value: selfFilter,
+    enumerable: false,
+    configurable: true,
+    writable: true
+}))
 
 let arr2 = [1, 2, 3]
 
@@ -49,7 +62,7 @@ arr2 = arr2.selfFilter(function (item) {
 console.log(arr2)
 
 
-// reduce实现ES6的Array.prototype.flat(Infinity)
+// reduce实现数组扁平化
 let arr3 = [1, 2, [3, 4, [5, 6, 7, 8], 9], 10, 11, 12, [13, 14]]
 
 function selfFlat(array) {

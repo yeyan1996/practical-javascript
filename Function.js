@@ -21,7 +21,14 @@ const selfBind = function (bindTarget, ...args1) {
     return boundFunc
 }
 
-Function.prototype.selfBind || (Function.prototype.selfBind = selfBind)
+
+Function.prototype.selfBind || (Object.defineProperty(Function.prototype, 'selfBind', {
+    value: selfBind,
+    enumerable: false,
+    configurable: true,
+    writable: true
+}))
+
 
 function func() {
     this.name = 'yeyan1996'
@@ -52,7 +59,13 @@ const selfCall = function (context, ...args) {
     return res
 }
 
-Function.prototype.selfCall || (Function.prototype.selfCall = selfCall)
+
+Function.prototype.selfCall || (Object.defineProperty(Function.prototype, 'selfCall', {
+    value: selfCall,
+    enumerable: false,
+    configurable: true,
+    writable: true
+}))
 
 let example2 = {a: 1}
 func.selfCall(example2)
