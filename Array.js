@@ -75,7 +75,7 @@ function selfFlat(array) {
     },[])
 }
 
-//剪头函数简写
-let selfFlat2 = array => array.reduce((acc, cur) => (Array.selfIsArray(cur) ? [...acc, ...selfFlat(cur)] : [...acc, cur]), [])
+//箭头函数简写
+let selfFlat2 = array => array.reduce((acc, cur) => (Array.selfIsArray(cur) ? [...acc, ...selfFlat2(cur)] : [...acc, cur]), [])
 
 console.log(selfFlat2(arr3))
