@@ -46,5 +46,17 @@ console.log(Object.selfAssign(target,obj1,obj2))
 console.log(Object.selfAssign("abd", null, undefined))
 
 
+const selfInstanceof = function (left, right) {
+    let proto = Object.getPrototypeOf(left)
+    while (true) {
+        if (proto == null) return false
+        if (proto === right.prototype) {
+            return true
+        }
+        proto = Object.getPrototypeOf(proto)
+    }
+}
+
+console.log(selfInstanceof({}, Array))
 
 

@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        .mouse_move{
+        .mouse_move {
             display: inline-block;
             background: blue;
-            width:500px;
-            height:500px;
-            margin:20px;
+            width: 500px;
+            height: 500px;
+            margin: 20px;
         }
-        span{
-            color:white;
+
+        span {
+            color: white;
         }
     </style>
 </head>
@@ -22,33 +23,18 @@
     <span>Throttle1</span>
 </div>
 
-<div class="mouse_move">
-    <span>Throttle2</span>
-</div>
-
-<div class="mouse_move">
-    <span>Throttle3</span>
-</div>
 
 <script type="module">
     "use strict"
     import {Throttle1} from './Throttle.js'
-    import {Throttle2} from './Throttle.js'
-    import {Throttle3} from './Throttle.js'
     function handler() {
         console.log(1)
     }
+
     let mousemoveElementList = document.querySelectorAll('.mouse_move')
+    const TIME = 2500
 
-    const TIME = 2000
-
-    mousemoveElementList[0].addEventListener('mousemove',Throttle1(handler,null,TIME))
-
-
-    mousemoveElementList[1].addEventListener('mousemove',Throttle2(handler,null,TIME))
-
-
-    mousemoveElementList[2].addEventListener('mousemove',Throttle3(handler,null,TIME))
+    mousemoveElementList[0].addEventListener('mousemove', Throttle1(handler, null, TIME, true, true))
 
 </script>
 </body>
