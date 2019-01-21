@@ -42,7 +42,7 @@ let obj2 = {
     d: null
 }
 
-console.log(Object.selfAssign(target,obj1,obj2))
+console.log(Object.selfAssign(target, obj1, obj2))
 console.log(Object.selfAssign("abd", null, undefined))
 
 

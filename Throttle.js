@@ -8,11 +8,13 @@
  * @return {Function} -经过节流处理的函数
  **/
 
-export function Throttle1(func, context, time,trailing) {
+
+export function Throttle1(func, context, time, trailing) {
     let previous = new Date(0)
     let timmer
     return function (...args) {
         let now = new Date().getTime()
+
         if (now - previous > time) {
             func.apply(context, args)
             previous = now

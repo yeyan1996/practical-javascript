@@ -47,15 +47,15 @@ let x = new boundFunc()
 console.log(x)
 
 
-//selfCall
+//selfCall(ES6版本)
 const selfCall = function (context, ...args) {
     let func = this
     context || (context = window)
     if (typeof func !== 'function') throw new TypeError('this is not function')
-    let fn = Symbol('fn')
-    context[fn] = func
-    let res = context[fn](...args)
-    delete context[fn]
+    let caller = Symbol('caller')
+    context[caller] = func
+    let res = context[caller](...args)
+    delete context[caller]
     return res
 }
 
