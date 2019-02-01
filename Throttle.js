@@ -9,8 +9,8 @@
  **/
 
 
-export function Throttle1(func, context, time, trailing) {
-    let previous = new Date(0)
+export const Throttle1 = (func, context, time, trailing) => {
+    let previous = new Date(0).getTime()
     let timmer
     return function (...args) {
         let now = new Date().getTime()
@@ -27,3 +27,19 @@ export function Throttle1(func, context, time, trailing) {
     }
 }
 
+//使用Proxy实现函数节流
+export const proxy = (func, time) => {
+
+    let previous = new Date(0).getTime()
+
+    let handler = {
+        apply(target, context, args) {
+            let now = new Date().getTime()
+            if (now - previous > time) {
+                previous = now
+                Reflect.apply(func, context, args)
+            }
+        }
+    }
+    return new Proxy(func, handler)
+}

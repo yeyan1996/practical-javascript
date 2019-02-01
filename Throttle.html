@@ -23,10 +23,15 @@
     <span>Throttle1</span>
 </div>
 
+<div class="mouse_move">
+    <span>Proxy</span>
+</div>
+
+
 
 <script type="module">
     "use strict"
-    import {Throttle1} from './Throttle.js'
+    import {Throttle1,proxy} from './Throttle.js'
     function handler() {
         console.log(1)
     }
@@ -34,7 +39,8 @@
     let mousemoveElementList = document.querySelectorAll('.mouse_move')
     const TIME = 2500
 
-    mousemoveElementList[0].addEventListener('mousemove', Throttle1(handler, null, TIME, true, true))
+    mousemoveElementList[0].addEventListener('mousemove', Throttle1(handler, null, TIME, true))
+    mousemoveElementList[1].addEventListener('mousemove', proxy(handler,TIME))
 
 </script>
 </body>

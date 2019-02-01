@@ -26,4 +26,3 @@ export default function Debounce(func, context = null, time = 17, immediate = fa
         }
     }
 }
-
