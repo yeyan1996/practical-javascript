@@ -1,4 +1,3 @@
-
 /**
  * @description 函数柯里化（根据柯里化后的函数执行多少次判断函数的结果）
  * @function Curry1
@@ -22,7 +21,7 @@ function add1(num1, num2, num3) {
 }
 
 let curriedAdd1 = Curry1(add1)
-console.log(curriedAdd1(1)(2)(3)());
+console.log("curriedAdd1", curriedAdd1(1)(2)(3)());
 
 
 /**
@@ -33,30 +32,32 @@ console.log(curriedAdd1(1)(2)(3)());
 
 function Curry2(fn) {
     if (fn.length <= 1) return fn;
-    let finalArgs = []
-    const generator = () => num => {
-        finalArgs = [...finalArgs, num]
-        return finalArgs.length === fn.length ? fn(...finalArgs) : generator()
+    const generator = (...args) => {
+        if (fn.length === args.length) {
+            //执行fn并且返回执行结果
+            return fn(...args)
+        } else {
+            return (...args2) => {
+                //返回generator函数
+                return generator(...args, ...args2)
+            }
+        }
+
     }
-    return generator()
+    return generator
 }
 
-const add2 = (a, b, c) => a + b + c;
+const add2 = (a, b, c, d) => a + b + c + d;
 const curriedAdd2 = Curry2(add2);
-console.log(curriedAdd2(5)(6)(7));
+console.log("curriedAdd2", curriedAdd2(5)(6)(7)(8));
 
 
-
-//网上更好的方法,不用特意声明一个数组储存参数
+//ES6简写
 const Curry3 = (fn) => {
     if (fn.length <= 1) return fn;
-    const generator = (args) => (args.length === fn.length ? fn(...args) : arg => generator([...args, arg]));
+    const generator = args => (args.length === fn.length ? fn(...args) : (...args2) => generator(...args, ...args2));
     return generator([]);
 };
-
-
-const curriedAdd3 = Curry3(add2);
-console.log(curriedAdd3(8)(9)(10));
 
 
 /**
@@ -67,11 +68,11 @@ console.log(curriedAdd3(8)(9)(10));
  * @return {Function} -部分求值后的函数
  **/
 
-let partialFunc  = (func, ...rest1) => (...rest2) => func.apply(this,[...rest1,...rest2])
+let partialFunc = (func, ...rest1) => (...rest2) => func.apply(this, [...rest1, ...rest2])
 
 function add(num1, num2, num3, num4) {
     return num1 + num2 + num3 + num4
 }
 
 let addTwo = partialFunc(add, 2)
-console.log(addTwo(3, 4, 5))
+console.log("partialFunc", addTwo(3, 4, 5))
