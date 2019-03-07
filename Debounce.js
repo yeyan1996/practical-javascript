@@ -9,18 +9,17 @@
  **/
 
 export default function Debounce(func, context = null, time = 17, immediate = false) {
-    let timeId = Symbol('timeId')
+    let timeId
     return function (...args) {
         if (func[timeId]) {  //timeId必须是在函数外面能够读取的到的属性
             clearTimeout(func[timeId])
         }
         if (immediate && !func[timeId]) {
-            func[timeId] = setTimeout(() => {
-            }, time)
-            func.apply(context,args)
+            func[timeId] = setTimeout(() => {}, time)
+            func.apply(context, args)
         } else {
             func[timeId] = setTimeout(() => {
-                func.apply(context,args)
+                func.apply(context, args)
                 func[timeId] = null
             }, time)
         }
