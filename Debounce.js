@@ -9,20 +9,28 @@
  **/
 
 export default function Debounce(func, context = null, time = 17, immediate = false) {
-    let timeId = Symbol('timeId')
-    return function (...args) {
+    let timeId
+    const debounced =  function (...args) {
         if (func[timeId]) {  //timeId必须是在函数外面能够读取的到的属性
             clearTimeout(func[timeId])
         }
         if (immediate && !func[timeId]) {
-            func[timeId] = setTimeout(() => {
-            }, time)
-            func.apply(context,args)
+            func[timeId] = setTimeout(() => {}, time)
+            func.apply(context, args)
         } else {
             func[timeId] = setTimeout(() => {
-                func.apply(context,args)
+                func.apply(context, args)
                 func[timeId] = null
             }, time)
         }
     }
+    /**
+     * @description 取消函数
+     * @see https://juejin.im/post/5931561fa22b9d0058c5b87d
+     **/
+    debounced.cancel = function () {
+        clearTimeout(func[timeId])
+        func[timeId] = null
+    }
+    return debounced
 }

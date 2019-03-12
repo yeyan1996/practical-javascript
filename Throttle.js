@@ -12,7 +12,7 @@
 export const Throttle1 = (func, context, time, trailing) => {
     let previous = new Date(0).getTime()
     let timmer
-    return function (...args) {
+    const throttle = function (...args) {
         let now = new Date().getTime()
 
         if (now - previous > time) {
@@ -25,6 +25,13 @@ export const Throttle1 = (func, context, time, trailing) => {
             }, time)
         }
     }
+
+    throttle.cancel = function () {
+        previous = 0
+        clearTimeout(timmer)
+        timmer = null
+    }
+    return throttle
 }
 
 //使用Proxy实现函数节流

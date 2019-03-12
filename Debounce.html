@@ -4,18 +4,25 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        #red{
-            height:500px;
-            width:500px;
+        #red {
+            height: 500px;
+            width: 500px;
             background: red;
             display: flex;
             flex-wrap: wrap;
         }
-        .child{
+
+        .child {
             border: 1px solid #00B7FF;
-            height:100px;
-            width:100px;
+            height: 100px;
+            width: 100px;
             background: gold;
+        }
+
+        .cancel {
+            position: fixed;
+            right: 60%;
+            top: 150px;
         }
     </style>
 </head>
@@ -130,13 +137,23 @@
     <div class="child"></div>
 </div>
 
+<button class="cancel">取消</button>
 
 <script type="module">
     import Debounce from './Debounce.js'
+
     function handler() {
         console.log(1)
     }
-    window.addEventListener('scroll',Debounce(handler,null,500,true))
+
+    function handleClick() {
+        debounce.cancel()
+    }
+
+    let debounce = Debounce(handler, null, 5000, true)
+    let button = document.querySelector("button")
+    button.onclick = handleClick
+    window.addEventListener('scroll', debounce)
 </script>
 </body>
 </html>

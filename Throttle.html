@@ -15,6 +15,12 @@
         span {
             color: white;
         }
+
+        button {
+            position: absolute;
+            left: 400px;
+            top: 400px;
+        }
     </style>
 </head>
 <body>
@@ -23,24 +29,32 @@
     <span>Throttle1</span>
 </div>
 
+<button>取消</button>
+
 <div class="mouse_move">
     <span>Proxy</span>
 </div>
 
 
-
 <script type="module">
     "use strict"
-    import {Throttle1,proxy} from './Throttle.js'
+    import {Throttle1, proxy} from './Throttle.js'
+    const TIME = 2500
+
     function handler() {
         console.log(1)
     }
 
+    let throttle = Throttle1(handler, null, TIME, true)
+    let btn = document.querySelector("button")
+    btn.onclick = function () {
+        throttle.cancel()
+    }
     let mousemoveElementList = document.querySelectorAll('.mouse_move')
-    const TIME = 2500
 
-    mousemoveElementList[0].addEventListener('mousemove', Throttle1(handler, null, TIME, true))
-    mousemoveElementList[1].addEventListener('mousemove', proxy(handler,TIME))
+
+    mousemoveElementList[0].addEventListener('mousemove', throttle)
+    mousemoveElementList[1].addEventListener('mousemove', proxy(handler, TIME))
 
 </script>
 </body>
