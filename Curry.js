@@ -55,24 +55,44 @@ console.log("curriedAdd2", curriedAdd2(5)(6)(7)(8));
 //ES6简写
 const Curry3 = (fn) => {
     if (fn.length <= 1) return fn;
-    const generator = args => (args.length === fn.length ? fn(...args) : (...args2) => generator(...args, ...args2));
-    return generator([]);
+    const generator = (...args) => (args.length === fn.length ? fn(...args) : (...args2) => generator(...args, ...args2));
+    return generator;
 };
-
+const curriedAdd3 = Curry3(add2);
+console.log("curriedAdd3", curriedAdd3(5)(6)(7)(8));
 
 /**
- * @description 偏函数（创建已经设置好一个或多个参数的函数）
+ * @description 偏函数（创建已经设置好一个或多个参数的函数,并且添加了占位符功能）
  * @function partial
  * @param {Function} func -部分求值的函数
  * @param {...*} [rest1] -部分求值的参数
  * @return {Function} -部分求值后的函数
  **/
 
-let partialFunc = (func, ...rest1) => (...rest2) => func.apply(this, [...rest1, ...rest2])
+let partialFunc = (func, ...rest1) => {
+    let placeholderNum = 0
+    return (...rest2) => {
+        rest2.forEach(arg => {
+            let index = rest1.findIndex(item => item === "_")
+            if (index < 0) return
+            rest1[index] = arg
+            placeholderNum++
+        })
+        if (placeholderNum < rest2.length) {
+            rest2 = rest2.slice(placeholderNum, rest2.length)
+        }
+        return func.apply(this, [...rest1, ...rest2])
+    }
+}
 
 function add(num1, num2, num3, num4) {
     return num1 + num2 + num3 + num4
 }
 
-let addTwo = partialFunc(add, 2)
-console.log("partialFunc", addTwo(3, 4, 5))
+let partialAdd = partialFunc(add, 1)
+console.log("partialFunc", partialAdd(2, 3, 4))
+
+
+let partialAdd2 = partialFunc(add, '_', 2, '_')
+console.log('partialFunc2', partialAdd2(1, 3, 4))
+
