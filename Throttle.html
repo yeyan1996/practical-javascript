@@ -38,14 +38,14 @@
 
 <script type="module">
     "use strict"
-    import {Throttle1, proxy} from './Throttle.js'
+    import {throttle1, proxy} from './Throttle.js'
     const TIME = 2500
 
     function handler() {
         console.log(1)
     }
 
-    let throttle = Throttle1(handler, null, TIME, true)
+    let throttle = throttle1(handler, null, TIME, true)
     let btn = document.querySelector("button")
     btn.onclick = function () {
         throttle.cancel()

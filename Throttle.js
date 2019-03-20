@@ -9,7 +9,7 @@
  **/
 
 
-export const Throttle1 = (func, context, time, trailing) => {
+export const throttle1 = (func, context, time, trailing) => {
     let previous = new Date(0).getTime()
     let timmer
     const throttle = function (...args) {
