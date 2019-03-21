@@ -14,23 +14,40 @@ const proxy = (func, time) => {
 }
 
 
-let imgList1 = [document.querySelectorAll("img")[0]]
+let imgList1 = [...document.querySelectorAll(".get_bounding_rect")]
+let num = imgList1.length
 
-const lazyLoad1 = function () {
-    imgList1.forEach(img => {
-        let rect = img.getBoundingClientRect()
-        if (rect.top < window.innerHeight) {
-            img.src = img.dataset.src
-        }
-    })
-}
+let lazyLoad1 = (function () {
+    let count = 0
+    return function () {
+        imgList1.forEach(img => {
+            let rect = img.getBoundingClientRect()
+            if (rect.top < window.innerHeight) {
+                img.src = img.dataset.src
+                let index = imgList1.findIndex(item => item === img)
+                imgList1.splice(index, 1)
+                count++
+                if (count === num) {
+                    //当图片全部加载完毕解绑scroll事件
+                    document.removeEventListener('scroll',lazyLoad1)
+                }
+            }
+        })
+    }
+})()
 
-document.addEventListener('scroll', proxy(lazyLoad1, 100))
+lazyLoad1 = proxy(lazyLoad1, 100)
+
+document.addEventListener('scroll', lazyLoad1)
+//手动加载一次，否则首屏的图片不触发滚动无法加载
+lazyLoad1()
 
 
-let imgList2 = [document.querySelectorAll("img")[1]]
 
-const lazyLoad2 = function () {
+
+let imgList2 = [...document.querySelectorAll(".intersection_observer")]
+
+let lazyLoad2 = function () {
     //实例化observer
     let observer = new IntersectionObserver(entries => {
         //entries存储着所有观察被元素的intersectionObserverEntry配置
@@ -49,3 +66,5 @@ const lazyLoad2 = function () {
 }
 
 lazyLoad2()
+
+
