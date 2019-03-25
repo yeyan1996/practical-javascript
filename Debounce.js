@@ -8,7 +8,7 @@
  * @return {Function} -经过函数防抖处理的函数
  **/
 
-export default function Debounce(func, context = null, time = 17, immediate = false) {
+export default function debounce(func, context = null, time = 17, immediate = false) {
     let timeId
     const debounced =  function (...args) {
         if (func[timeId]) {  //timeId必须是在函数外面能够读取的到的属性

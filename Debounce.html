@@ -140,20 +140,20 @@
 <button class="cancel">取消</button>
 
 <script type="module">
-    import Debounce from './Debounce.js'
+    import debounce from './debounce.js'
 
     function handler() {
         console.log(1)
     }
 
     function handleClick() {
-        debounce.cancel()
+        debouncedFunc.cancel()
     }
 
-    let debounce = Debounce(handler, null, 5000, true)
+    let debouncedFunc = debounce(handler, null, 2000, true)
     let button = document.querySelector("button")
     button.onclick = handleClick
-    window.addEventListener('scroll', debounce)
+    window.addEventListener('scroll', debouncedFunc)
 </script>
 </body>
 </html>

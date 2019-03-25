@@ -4,7 +4,7 @@
  * @param {function} fn -柯里化的函数
  * @returns {function} -柯里化后的函数
  */
-function Curry1(fn) {
+function curry1(fn) {
     let args = []
     return function next(...rest) {
         if (rest.length) {
@@ -20,7 +20,7 @@ function add1(num1, num2, num3) {
     return num1 + num2 + num3
 }
 
-let curriedAdd1 = Curry1(add1)
+let curriedAdd1 = curry1(add1)
 console.log("curriedAdd1", curriedAdd1(1)(2)(3)());
 
 
@@ -30,7 +30,7 @@ console.log("curriedAdd1", curriedAdd1(1)(2)(3)());
  * @param {function} fn -柯里化的函数
  */
 
-function Curry2(fn) {
+function curry2(fn) {
     if (fn.length <= 1) return fn;
     const generator = (...args) => {
         if (fn.length === args.length) {
@@ -48,17 +48,17 @@ function Curry2(fn) {
 }
 
 const add2 = (a, b, c, d) => a + b + c + d;
-const curriedAdd2 = Curry2(add2);
+const curriedAdd2 = curry2(add2);
 console.log("curriedAdd2", curriedAdd2(5)(6)(7)(8));
 
 
 //ES6简写
-const Curry3 = (fn) => {
+const curry3 = (fn) => {
     if (fn.length <= 1) return fn;
     const generator = (...args) => (args.length === fn.length ? fn(...args) : (...args2) => generator(...args, ...args2));
     return generator;
 };
-const curriedAdd3 = Curry3(add2);
+const curriedAdd3 = curry3(add2);
 console.log("curriedAdd3", curriedAdd3(5)(6)(7)(8));
 
 /**
