@@ -77,12 +77,19 @@ console.log(person2.getName())
 
 
 //私有变量(闭包)
-function Person4(name) {
-    let _name = name
-    this.getName = function () {
-        return _name
+const Person4 = (function () {
+    let _name
+    class Person4{
+        constructor(name) {
+            _name = name
+        }
+        getName() {
+            return _name
+        }
     }
-}
+    return Person4
+})()
+
 
 let person4 = new Person4('zhl')
 console.log(person4)
