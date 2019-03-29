@@ -1,4 +1,5 @@
-//nodejs promisify通用函数
+//适合err-first风格的异步操作(eg. nodejs)的promisify通用函数
+
 const fs = require("fs")
 
 function promisify(original) {
