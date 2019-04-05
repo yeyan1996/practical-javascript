@@ -53,13 +53,36 @@ console.log("curriedAdd2", curriedAdd2(5)(6)(7)(8));
 
 
 //ES6简写
-const curry3 = (fn) => {
+const curry3 = fn => {
     if (fn.length <= 1) return fn;
     const generator = (...args) => (args.length === fn.length ? fn(...args) : (...args2) => generator(...args, ...args2));
     return generator;
 };
 const curriedAdd3 = curry3(add2);
 console.log("curriedAdd3", curriedAdd3(5)(6)(7)(8));
+
+
+//函数组合+函数柯里化
+const compose = function (...fns) {
+    return function (initValue) {
+        return fns.reduceRight((acc, cur) => {
+            return cur(acc)
+        }, initValue)
+    }
+}
+
+const curriedJoin = curry3((separator, arr) => arr.join(separator))
+const curriedMap = curry3((fn, arr) => arr.map(fn))
+const curriedSplit = curry3((separator, str) => str.split(separator))
+
+
+const composeFunc = compose(
+    curriedJoin("1"),
+    curriedMap(item => `${item}1`),
+    curriedSplit(""),
+)
+
+console.log(composeFunc('helloworld'))
 
 /**
  * @description 偏函数（创建已经设置好一个或多个参数的函数,并且添加了占位符功能）
