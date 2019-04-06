@@ -3,6 +3,13 @@
  * @see https://github.com/mqyqingfeng/Blog/issues/51
  **/
 
+//旧版本的chrome对于10个元素内的数组使用插入算法进行排序(最新版已经修改了排序算法)
+function originSort(arr) {
+    arr = arr.sort((a, b) => Math.random() - 0.5)
+    return arr
+}
+
+
 //原理是将当前元素之后的所有元素中随机选取一个和当前元素互换
 function shuffle(arr) {
     for (let i = 0; i < arr.length; i++) {
@@ -22,20 +29,25 @@ function shuffle2(arr) {
     return _arr
 }
 
-var times = 100000;
-var res = {};
-
-for (var i = 0; i < times; i++) {
-
-    var arr = [1, 2, 3];
-    arr = shuffle(arr)
-
-    var key = JSON.stringify(arr);
-    res[key] ? res[key]++ : res[key] = 1;
-}
+function statistics(fn, arr) {
+    let times = 100000;
+    let res = {};
+    for (let i = 0; i < times; i++) {
+        //每次循环声明一次防止引用同一数组
+        let _arr = [...arr]
+        let key = JSON.stringify(fn(_arr));
+        res[key] ? res[key]++ : res[key] = 1;
+    }
 
 // 为了方便展示，转换成百分比
-for (var key in res) {
-    res[key] = res[key] / times * 100 + '%'
+    Object.keys(res).forEach(key => {
+        res[key] = res[key] / times * 100 + '%'
+    })
+
+    console.log(res)
 }
-console.log(res)
+
+statistics(originSort, [1, 2, 3])
+statistics(shuffle, [1, 2, 3])
+statistics(shuffle2, [1, 2, 3])
+
