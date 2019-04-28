@@ -10,7 +10,7 @@ some skill about JavaScript
 * [x] 发布订阅模式
 * [x] bind/call的实现
 * [x] 简易的CO模块(自执行generator)
-* [x] 图片懒加载(getBoundingRect/intersectionObserver)
+* [x] 图片懒加载(getBoundingClientRect/intersectionObserver)
 * [x] new关键字的实现
 * [x] Object.assign/instanceof的实现
 * [x] 私有变量的4种实现方法
