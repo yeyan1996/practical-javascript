@@ -62,6 +62,44 @@ const curriedAdd3 = curry3(add2);
 console.log("curriedAdd3", curriedAdd3(5)(6)(7)(8));
 
 
+/**
+ * @description 函数柯里化（支持占位符版本）
+ * @function curry4
+ * @param {function} fn -柯里化的函数
+ * @param {String} [placeholder = "_"] -占位符
+ */
+const curry4 = (fn, placeholder = "_") => {
+    curry4.placeholder = placeholder
+    if (fn.length <= 1) return fn;
+    let argsList = []
+    const generator = (...args) => {
+        let currentPlaceholderIndex = -1 //防止当前轮元素覆盖了当前轮的占位符
+        args.forEach(arg => {
+            let placeholderIndex = argsList.findIndex(arg => arg === curry4.placeholder)
+            if (placeholderIndex < 0) { // 如果没有占位符直接往数组末尾放入一个元素
+                currentPlaceholderIndex = argsList.push(arg) - 1
+            } else if (placeholderIndex !== currentPlaceholderIndex) {  // 防止将真实元素填充到当前轮参数的占位符
+                argsList[placeholderIndex] = arg
+            } else { 
+                argsList.push(arg)
+            }
+        })
+        let realArgList = argsList.filter(arg => arg !== curry4.placeholder) //过滤出不含占位符的真实数组
+        if (realArgList.length === fn.length) {
+            return fn(...argsList)
+        } else if (realArgList.length > fn.length) {
+            throw new Error('超出初始函数参数最大值')
+        } else {
+            return generator
+        }
+    }
+
+    return generator
+}
+const curriedAdd4 = curry4(add2);
+console.log("curriedAdd4", curriedAdd4('_', 6)(5, '_')(7)(8))
+
+
 //函数组合+函数柯里化
 const compose = function (...fns) {
     return function (initValue) {
@@ -82,7 +120,7 @@ const composeFunc = compose(
     curriedSplit(""),
 )
 
-console.log(composeFunc('helloworld'))
+console.log("compose + curry", composeFunc('helloworld'))
 
 /**
  * @description 偏函数（创建已经设置好一个或多个参数的函数,并且添加了占位符功能）
