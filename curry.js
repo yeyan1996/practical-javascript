@@ -80,7 +80,7 @@ const curry4 = (fn, placeholder = "_") => {
                 currentPlaceholderIndex = argsList.push(arg) - 1
             } else if (placeholderIndex !== currentPlaceholderIndex) {  // 防止将真实元素填充到当前轮参数的占位符
                 argsList[placeholderIndex] = arg
-            } else { 
+            } else {
                 argsList.push(arg)
             }
         })
