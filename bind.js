@@ -2,7 +2,7 @@ const isComplexDataType = obj => (typeof obj === 'object' || typeof obj === 'fun
 
 // 实现一个简易的bind
 const selfBind = function (bindTarget, ...args1) {
-    if (typeof this !== 'function') throw new TypeError('this is not function')
+    if (typeof this !== 'function') throw new TypeError('Bind must be called on a function')
     let func = this
     let boundFunc = function (...args2) {
         let args = [...args1, ...args2]
@@ -42,7 +42,7 @@ Function.prototype.selfBind || (Object.defineProperty(Function.prototype, 'selfB
 }))
 
 
-function func() {
+function func(a,b,c) {
     this.name = 'yeyan1996'
     return {}
 }
@@ -53,34 +53,12 @@ let example = {
 
 let boundFunc = func.selfBind(example)
 
+
+console.dir(func)
+console.dir(boundFunc)
+
 boundFunc()
 console.log(example)
 
 let x = new boundFunc()
 console.log(x)
-
-
-//selfCall(ES6版本)
-const selfCall = function (context, ...args) {
-    let func = this
-    context || (context = window)
-    if (typeof func !== 'function') throw new TypeError('this is not function')
-    let caller = Symbol('caller')
-    context[caller] = func
-    let res = context[caller](...args)
-    delete context[caller]
-    return res
-}
-
-
-Function.prototype.selfCall || (Object.defineProperty(Function.prototype, 'selfCall', {
-    value: selfCall,
-    enumerable: false,
-    configurable: true,
-    writable: true
-}))
-
-let example2 = {a: 1}
-func.selfCall(example2)
-console.log(example2)
-

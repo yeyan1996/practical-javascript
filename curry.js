@@ -1,30 +1,4 @@
 /**
- * @description 函数柯里化（根据柯里化后的函数执行多少次判断函数的结果）
- * @function Curry1
- * @param {function} fn -柯里化的函数
- * @returns {function} -柯里化后的函数
- */
-function curry1(fn) {
-    let args = []
-    return function next(...rest) {
-        if (rest.length) {
-            args.push(...rest)
-            return next
-        } else {
-            return fn(...args)
-        }
-    }
-}
-
-function add1(num1, num2, num3) {
-    return num1 + num2 + num3
-}
-
-let curriedAdd1 = curry1(add1)
-console.log("curriedAdd1", curriedAdd1(1)(2)(3)());
-
-
-/**
  * @description 函数柯里化（根据柯里化前的函数的参数数量决定柯里化后的函数需要执行多少次）
  * @function Curry2
  * @param {function} fn -柯里化的函数
@@ -42,7 +16,6 @@ function curry2(fn) {
                 return generator(...args, ...args2)
             }
         }
-
     }
     return generator
 }
@@ -126,23 +99,23 @@ console.log("compose + curry", composeFunc('helloworld'))
  * @description 偏函数（创建已经设置好一个或多个参数的函数,并且添加了占位符功能）
  * @function partial
  * @param {Function} func -部分求值的函数
- * @param {...*} [rest1] -部分求值的参数
+ * @param {...*} [args] -部分求值的参数
  * @return {Function} -部分求值后的函数
  **/
 
-let partialFunc = (func, ...rest1) => {
+const partialFunc = (func, ...args) => {
     let placeholderNum = 0
-    return (...rest2) => {
-        rest2.forEach(arg => {
-            let index = rest1.findIndex(item => item === "_")
+    return (...args2) => {
+        args2.forEach(arg => {
+            let index = args.findIndex(item => item === "_")
             if (index < 0) return
-            rest1[index] = arg
+            args[index] = arg
             placeholderNum++
         })
-        if (placeholderNum < rest2.length) {
-            rest2 = rest2.slice(placeholderNum, rest2.length)
+        if (placeholderNum < args2.length) {
+            args2 = args2.slice(placeholderNum, args2.length)
         }
-        return func.apply(this, [...rest1, ...rest2])
+        return func.apply(this, [...args, ...args2])
     }
 }
 

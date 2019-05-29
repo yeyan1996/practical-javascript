@@ -1,49 +1,49 @@
 //简单模拟ES6的class实现
-class Animal1 {
-    constructor(name) {
-        this.name = name
-    }
+// class Animal {
+//     constructor(name) {
+//         this.name = name
+//     }
+//
+//     sleep() {
+//         console.log('animal is sleeping')
+//     }
+//
+//     static staticFunc() {
+//         console.log('staticFunc')
+//     }
+// }
+//
+// class Dog extends Animal {
+//     constructor(name, color) {
+//         super(name)
+//         this.color = color
+//     }
+//
+//     barking() {
+//         console.log('wang!')
+//     }
+// }
+//
+// let brownTeddy = new Dog('teddy', 'brown')
+// Dog.staticFunc()
+// console.log(brownTeddy)
+// brownTeddy.sleep()
+// brownTeddy.barking()
 
-    sleep() {
-        console.log('animal is sleeping')
-    }
 
-    static staticFunc() {
-        console.log('staticFunc')
-    }
-}
-
-class Dog1 extends Animal1 {
-    constructor(name, color) {
-        super(name)
-        this.color = color
-    }
-
-    barking() {
-        console.log('wang!')
-    }
-}
-
-let brownTeddy = new Dog1('teddy', 'brown')
-Dog1.staticFunc()
-console.log(brownTeddy)
-brownTeddy.sleep()
-brownTeddy.barking()
-
-
-function Animal2(name) {
+function Animal(name) {
     this.name = name
 }
 
-Animal2.staticFunc = function () {
+Animal.staticFunc = function () {
     console.log('staticFunc')
 }
-Animal2.prototype.sleep = function () {
+Animal.prototype.sleep = function () {
     console.log('animal is sleeping')
 }
 
-function Dog2(name, color) {
-    Animal2.call(this, name)
+function Dog(name, color) {
+    Animal.call(this, name)
     this.color = color
 }
 
@@ -62,16 +62,16 @@ function inherit(subType, superType) {
     Object.setPrototypeOf(subType, superType)
 }
 
-inherit(Dog2, Animal2)
+inherit(Dog, Animal)
 
-//需要在继承之后再往Dog2中添加原型方法，否则会被覆盖掉
-Dog2.prototype.barking = function () {
+//需要在继承之后再往Dog中添加原型方法，否则会被覆盖掉
+Dog.prototype.barking = function () {
     console.log('wang!')
 }
 
 
-let brownTeddy2 = new Dog2('teddy', 'brown')
-Dog2.staticFunc()
-console.log(brownTeddy2)
-brownTeddy2.sleep()
-brownTeddy2.barking()
+let brownTeddy = new Dog('teddy', 'brown')
+Dog.staticFunc()
+console.log(brownTeddy)
+brownTeddy.sleep()
+brownTeddy.barking()

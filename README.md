@@ -17,3 +17,4 @@ some skill about JavaScript
 * [x] 洗牌算法
 * [x] 单例模式
 * [x] promisify函数
+* [x] 优雅处理 async/await
