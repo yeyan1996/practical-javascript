@@ -21,10 +21,11 @@
 
         .cancel {
             position: fixed;
-            right: 60%;
+            right: 70%;
             top: 150px;
         }
     </style>
+    <script src='./debounce.js'></script>
 </head>
 <body>
 <div id="red">
@@ -139,20 +140,14 @@
 
 <button class="cancel">取消</button>
 
-<script type="module">
-    import debounce from './debounce.js'
-
+<script>
     function handler() {
         console.log(1)
     }
 
-    function handleClick() {
-        debouncedFunc.cancel()
-    }
-
-    let debouncedFunc = debounce(handler, null, 2000, true)
+    let debouncedFunc = debounce(handler, 2000)
     let button = document.querySelector("button")
-    button.onclick = handleClick
+    button.onclick =  debouncedFunc.cancel
     window.addEventListener('scroll', debouncedFunc)
 </script>
 </body>

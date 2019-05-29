@@ -22,6 +22,7 @@
             top: 400px;
         }
     </style>
+    <script src="./throttle.js"></script>
 </head>
 <body>
 
@@ -36,24 +37,19 @@
 </div>
 
 
-<script type="module">
-    "use strict"
-    import {throttle1, proxy} from './throttle.js'
-    const TIME = 2500
+<script >
+    const TIME = 2000
 
     function handler() {
         console.log(1)
     }
 
-    let throttle = throttle1(handler, null, TIME, true)
+    let throttledFunc = throttle(handler, TIME)
     let btn = document.querySelector("button")
-    btn.onclick = function () {
-        throttle.cancel()
-    }
+    btn.onclick = throttledFunc.cancel
+
     let mousemoveElementList = document.querySelectorAll('.mouse_move')
-
-
-    mousemoveElementList[0].addEventListener('mousemove', throttle)
+    mousemoveElementList[0].addEventListener('mousemove', throttledFunc)
     mousemoveElementList[1].addEventListener('mousemove', proxy(handler, TIME))
 
 </script>

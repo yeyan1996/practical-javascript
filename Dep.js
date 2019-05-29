@@ -20,22 +20,22 @@ class Dep {
         }
     }
 
-    once(event, cb) {
-        const _cb = (...rest) => {
-            let res = cb.apply(null, rest)
-            this.off(event, cb)
+    once(event, onceCb) {
+        const cb = (...rest) => {
+            let res = onceCb.apply(null, rest)
+            this.off(event, onceCb)
             return res
         }
 
         if (!this.subs[event]) {
             this.subs[event] = []
-            this.subs[event].push(_cb)
+            this.subs[event].push(cb)
         }
     }
 
-    off(event, _cb) {
+    off(event, offCb) {
         if (this.subs[event]) {
-            let index = this.subs[event].findIndex(cb => cb === _cb)
+            let index = this.subs[event].findIndex(cb => cb === offCb)
             this.subs[event].splice(index, 1)
             if (!this.subs[event].length) delete this.subs[event]
         }

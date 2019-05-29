@@ -1,8 +1,9 @@
-//适合err-first风格的异步操作(eg. nodejs)的promisify通用函数
+// 使用 nodejs 运行以下代码
+// 适合err-first风格的异步操作(eg. nodejs)的 promisify 通用函数
 
 const fs = require("fs")
 
-function promisify(original) {
+function promisify(asyncFunc) {
     return function (...args) {
         return new Promise((resolve, reject) => {
             args.push(function callback(err, ...values) {
@@ -11,7 +12,7 @@ function promisify(original) {
                 }
                 return resolve(...values)
             });
-            original.call(this, ...args);
+            asyncFunc.call(this, ...args);
         });
     };
 }

@@ -1,52 +1,84 @@
 /**
- * @description 函数节流(时间戳)，第一次会立即触发，最后一次会立即停止
- * @function Throttle
+ * @description 函数节流
  * @param {Function} func -需要函数节流的函数
- * @param {Object} context -函数作用域
  * @param {Number} time -延迟时间
- * @param {Boolean} trailing -是否需要在停止的时候再触发一次
+ * @param {Options} options -配置项
  * @return {Function} -经过节流处理的函数
  **/
 
+/**
+ * @typedef {Object} Options -配置项
+ * @property {Boolean} leading -开始是否需要额外触发一次
+ * @property {Boolean} trailing -结束后是否需要额外触发一次
+ * @property {this} context -上下文
+ **/
 
-export const throttle1 = (func, context, time, trailing) => {
+const throttle = (func, time = 17, options = {
+    // leading 和 trailing 无法同时为 false
+    leading: true,
+    trailing: false,
+    context: null
+}) => {
     let previous = new Date(0).getTime()
-    let timmer
-    const throttle = function (...args) {
-        let now = new Date().getTime()
+    let timer;
+    const _throttle = function (...args) {
+        let now = new Date().getTime();
 
-        if (now - previous > time) {
-            func.apply(context, args)
+        if (!options.leading) {
+            if (timer) return
+            timer = setTimeout(() => {
+                timer = null
+                func.apply(options.context, args)
+            }, time)
+        } else if (now - previous > time) {
+            func.apply(options.context, args)
             previous = now
-        } else if (trailing) {
-            clearTimeout(timmer)
-            timmer = setTimeout(() => {
-                func.apply(context, args)
+        } else if (options.trailing) {
+            clearTimeout(timer)
+            timer = setTimeout(() => {
+                func.apply(options.context, args)
             }, time)
         }
-    }
-
-    throttle.cancel = function () {
-        previous = 0
-        clearTimeout(timmer)
-        timmer = null
-    }
-    return throttle
-}
+    };
+    // 闭包返回取消函数
+    _throttle.cancel = () => {
+        previous = 0;
+        clearTimeout(timer);
+        timer = null
+    };
+    return _throttle
+};
 
 //使用Proxy实现函数节流
-export const proxy = (func, time) => {
-
-    let previous = new Date(0).getTime()
+function proxy(func, time, options = {
+    // leading 和 trailing 无法同时为 false
+    leading: false,
+    trailing: true,
+    context: null
+}) {
+    let timer;
+    let previous = new Date(0).getTime();
 
     let handler = {
-        apply(target, context, args) {
-            let now = new Date().getTime()
-            if (now - previous > time) {
+        apply(target, _, args) {
+            // 和闭包实现核心逻辑相同
+            let now = new Date().getTime();
+            if (!options.leading) {
+                if (timer) return;
+                timer = setTimeout(() => {
+                    timer = null;
+                    Reflect.apply(func, options.context, args)
+                }, time)
+            } else if (now - previous > time) {
+                Reflect.apply(func, options.context, args)
                 previous = now
-                Reflect.apply(func, context, args)
+            } else if (options.trailing) {
+                clearTimeout(timer)
+                timer = setTimeout(() => {
+                    Reflect.apply(func, options.context, args)
+                }, time)
             }
         }
-    }
+    };
     return new Proxy(func, handler)
 }
