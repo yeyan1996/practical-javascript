@@ -5,7 +5,7 @@
 
 //旧版本的chrome对于10个元素内的数组使用插入算法进行排序(最新版已经修改了排序算法)
 function originSort(arr) {
-    arr = arr.sort((a, b) => Math.random() - 0.5)
+    arr = arr.sort(() => Math.random() - 0.5)
     return arr
 }
 

@@ -12,7 +12,8 @@ some skill about JavaScript
 * [x] 简易的CO模块(自执行generator)
 * [x] 图片懒加载(getBoundingClientRect/intersectionObserver)
 * [x] new关键字的实现
-* [x] Object.assign/instanceof的实现
+* [x] Object.assign的实现
+* [x] instanceof的实现
 * [x] 私有变量的4种实现方法
 * [x] 洗牌算法
 * [x] 单例模式

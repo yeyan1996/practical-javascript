@@ -27,7 +27,7 @@ const selfBind = function (bindTarget, ...args1) {
     Object.defineProperties(boundFunc, {
         length: desc.length,
         name: Object.assign(desc.name, {
-            value: `bound${desc.name.value}`
+            value: `bound ${desc.name.value}`
         })
     })
     return boundFunc
@@ -42,7 +42,7 @@ Function.prototype.selfBind || (Object.defineProperty(Function.prototype, 'selfB
 }))
 
 
-function func(a,b,c) {
+function func() {
     this.name = 'yeyan1996'
     return {}
 }

@@ -1,10 +1,10 @@
 /**
  * @description 函数柯里化（根据柯里化前的函数的参数数量决定柯里化后的函数需要执行多少次）
- * @function Curry2
+ * @function curry
  * @param {function} fn -柯里化的函数
  */
 
-function curry2(fn) {
+function curry(fn) {
     if (fn.length <= 1) return fn;
     const generator = (...args) => {
         if (fn.length === args.length) {
@@ -20,19 +20,19 @@ function curry2(fn) {
     return generator
 }
 
-const add2 = (a, b, c, d) => a + b + c + d;
-const curriedAdd2 = curry2(add2);
-console.log("curriedAdd2", curriedAdd2(5)(6)(7)(8));
+const add = (a, b, c, d) => a + b + c + d;
+const curriedAdd = curry(add);
+console.log("curriedAdd", curriedAdd(5)(6)(7)(8));
 
 
 //ES6简写
-const curry3 = fn => {
+const curry2 = fn => {
     if (fn.length <= 1) return fn;
     const generator = (...args) => (args.length === fn.length ? fn(...args) : (...args2) => generator(...args, ...args2));
     return generator;
 };
-const curriedAdd3 = curry3(add2);
-console.log("curriedAdd3", curriedAdd3(5)(6)(7)(8));
+const curriedAdd2 = curry2(add);
+console.log("curriedAdd2", curriedAdd2(5)(6)(7)(8));
 
 
 /**
@@ -41,14 +41,14 @@ console.log("curriedAdd3", curriedAdd3(5)(6)(7)(8));
  * @param {function} fn -柯里化的函数
  * @param {String} [placeholder = "_"] -占位符
  */
-const curry4 = (fn, placeholder = "_") => {
-    curry4.placeholder = placeholder
+const curry3 = (fn, placeholder = "_") => {
+    curry3.placeholder = placeholder
     if (fn.length <= 1) return fn;
     let argsList = []
     const generator = (...args) => {
         let currentPlaceholderIndex = -1 //防止当前轮元素覆盖了当前轮的占位符
         args.forEach(arg => {
-            let placeholderIndex = argsList.findIndex(arg => arg === curry4.placeholder)
+            let placeholderIndex = argsList.findIndex(arg => arg === curry3.placeholder)
             if (placeholderIndex < 0) { // 如果没有占位符直接往数组末尾放入一个元素
                 currentPlaceholderIndex = argsList.push(arg) - 1
             } else if (placeholderIndex !== currentPlaceholderIndex) {  // 防止将真实元素填充到当前轮参数的占位符
@@ -57,7 +57,7 @@ const curry4 = (fn, placeholder = "_") => {
                 argsList.push(arg)
             }
         })
-        let realArgList = argsList.filter(arg => arg !== curry4.placeholder) //过滤出不含占位符的真实数组
+        let realArgList = argsList.filter(arg => arg !== curry3.placeholder) //过滤出不含占位符的真实数组
         if (realArgList.length === fn.length) {
             return fn(...argsList)
         } else if (realArgList.length > fn.length) {
@@ -69,8 +69,8 @@ const curry4 = (fn, placeholder = "_") => {
 
     return generator
 }
-const curriedAdd4 = curry4(add2);
-console.log("curriedAdd4", curriedAdd4('_', 6)(5, '_')(7)(8))
+const curriedAdd3 = curry3(add);
+console.log("curriedAdd3", curriedAdd3('_', 6)(5, '_')(7)(8))
 
 
 //函数组合+函数柯里化
@@ -119,9 +119,6 @@ const partialFunc = (func, ...args) => {
     }
 }
 
-function add(num1, num2, num3, num4) {
-    return num1 + num2 + num3 + num4
-}
 
 let partialAdd = partialFunc(add, 1)
 console.log("partialFunc", partialAdd(2, 3, 4))

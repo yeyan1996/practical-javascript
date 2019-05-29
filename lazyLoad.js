@@ -35,7 +35,7 @@ lazyLoad1()
 
 
 
-// mutationObserver 实现懒加载
+// intersectionObserver 实现懒加载
 let imgList2 = [...document.querySelectorAll(".intersection_observer")]
 
 let lazyLoad2 = function () {

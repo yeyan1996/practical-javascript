@@ -4,7 +4,7 @@ const isComplexDataType = obj => (typeof obj === 'object' || typeof obj === 'fun
 
 //简单实现ES6的Object.assign
 const selfAssign = function (target, ...source) {
-    if (target == null) throw new TypeError('不能传入null/undefined')
+    if (target == null) throw new TypeError('Cannot convert undefined or null to object')
     return source.reduce((acc, cur) => {
         isComplexDataType(acc) || (acc = new Object(acc)); //变成一个基本包装类型
         if (cur == null) return acc; //source为null,undefined时忽略
