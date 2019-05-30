@@ -1,6 +1,8 @@
 # JavaScript
 some skill about JavaScript
 
+[博客地址](https://juejin.im/post/5cef46226fb9a07eaf2b7516)
+
 * [x] 数组Api的内部原理
 * [x] reduce实现数组的Api
 * [x] ES6 class的ES5实现
