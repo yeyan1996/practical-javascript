@@ -1,12 +1,21 @@
-// 对象转为 JSON 字符串
+// 简单实现 JSON.stringify 方法
 
-const isComplexDataType = value => (typeof value === 'object' || typeof value === 'function') && value !== null;
-const isValidBasicDataType = value => value !== undefined && typeof value !== 'symbol'; // 合法的基础类型
+const isString = value => typeof value === 'string';
+const isSymbol = value => typeof value === 'symbol'
+const isUndefined = value => typeof value === 'undefined'
 const isDate = obj => Object.prototype.toString.call(obj) === '[object Date]'
 const isFunction = obj => Object.prototype.toString.call(obj) === '[object Function]';
+const isComplexDataType = value => (typeof value === 'object' || typeof value === 'function') && value !== null;
+const isValidBasicDataType = value => value !== undefined && !isSymbol(value); // 合法的基础类型
 const isValidObj = obj => Array.isArray(obj) || Object.prototype.toString.call(obj) === '[object Object]';// 合法的复杂类型(对象)
 const isInfinity = value => value === Infinity || value === -Infinity
-const isString = value => Object.prototype.toString.call(value) === '[object String]';
+
+
+// 在数组中存在 Symbol/Undefined/Function 类型会变成 null
+// Infinity/NaN 也会变成 null
+const processSpecialValueInArray = value =>
+    isSymbol(value) || isFunction(value) || isUndefined(value) || isInfinity(value) || isNaN(value) ? null : value;
+
 // 根据 JSON 规范处理属性值
 const processValue = value => {
     if (isInfinity(value) || isNaN(value)) {
@@ -20,18 +29,20 @@ const processValue = value => {
 
 let s = Symbol('s')
 let obj = {
-    str:"123",
-    arr: [1, 2, {e: 1}],
+    str: "123",
+    arr: [1, {e: 1}, s, () => {
+    }, undefined,Infinity,NaN],
     obj: {a: 1},
     Infinity: -Infinity,
-    nan:NaN,
+    nan: NaN,
     undef: undefined,
     symbol: s,
     date: new Date(),
-    reg:/123/g,
-    func:()=>{},
-    dom:document.querySelector('body'),
-}
+    reg: /123/g,
+    func: () => {
+    },
+    dom: document.querySelector('body'),
+};
 
 // obj.loop = obj
 
@@ -44,7 +55,7 @@ const jsonStringify = (function () {
         let res = "";
 
         if (isComplexDataType(obj)) { // 复杂类型的情况
-
+            if (obj.toJSON) return obj.toJSON; // 含有 toJSON 方法则直接调用
             if (!isValidObj(obj)) {  // 非法的复杂类型直接返回
                 return
             }
@@ -54,8 +65,12 @@ const jsonStringify = (function () {
                 res += "[";
                 let temp = []; //声明一个临时数组用来控制属性之间的逗号
                 obj.forEach((value) => {
-                    temp.push(isComplexDataType(value) ? jsonStringify(value) : `${value}`)
-                })
+                    temp.push(
+                        isComplexDataType(value) && !isFunction(value) ?
+                            jsonStringify(value) :
+                            `${processSpecialValueInArray(value, true)}`
+                    )
+                });
                 res += `${temp.join(',')}]`
             } else {  // 对象的情况
                 res += "{";
@@ -66,9 +81,9 @@ const jsonStringify = (function () {
                         // 值是合法对象的情况
                         if (isValidObj(obj[key])) {
                             temp.push(`"${key}":${jsonStringify(obj[key])}`)
-                        } else if (isDate(obj[key])) {
+                        } else if (isDate(obj[key])) { // Date 类型调用 toISOString
                             temp.push(`"${key}":"${obj[key].toISOString()}"`)
-                        } else if (!isFunction(obj[key])) {
+                        } else if (!isFunction(obj[key])) { // 其余非函数类型返回空对象
                             temp.push(`"${key}":{}`)
                         }
                     } else if (isValidBasicDataType(obj[key])) {   // 值是基本类型
@@ -77,8 +92,10 @@ const jsonStringify = (function () {
                 });
                 res += `${temp.join(',')}}`
             }
-        }else{ // 基本类型直接返回
-            return obj
+        } else if (isSymbol(obj)) { // Symbol 返回 undefined
+            return
+        } else {
+            return obj  // 非 Symbol 的基本类型直接返回
         }
         return res
     }
