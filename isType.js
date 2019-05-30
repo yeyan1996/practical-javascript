@@ -1,7 +1,4 @@
-const isType = type => target => {
-    let stringType = Object.prototype.toString.call(target)
-    return `[object ${type}]` === stringType
-}
+const isType = type => target => `[object ${type}]` === Object.prototype.toString.call(target)
 
 const selfIsArray = isType('Array')
 
