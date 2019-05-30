@@ -9,5 +9,4 @@ Array.selfIsArray || (Object.defineProperty(Array, 'selfIsArray', {
     writable: true
 }))
 
-const isNull = isType('Null')
-console.log(isNull(null)); // true
+console.log(selfIsArray([])); // true

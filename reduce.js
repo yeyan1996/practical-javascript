@@ -4,6 +4,7 @@ const selfReduce = function (fn, initialValue) {
     if (initialValue) arr.unshift(initialValue)
     let res = arr[0]
     for (let i = 0; i < arr.length - 1; i++) {
+        if(!arr.hasOwnProperty(i+1)) continue;
         res = fn.call(null, res, arr[i + 1], i, arr)
     }
     return res

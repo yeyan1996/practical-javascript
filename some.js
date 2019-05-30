@@ -5,6 +5,7 @@ const selfSome = function (fn, context) {
     if(!arr.length) return false
     let flag = false
     for (let i = 0; i < arr.length; i++) {
+        if(!arr.hasOwnProperty(i)) continue;
         let res = fn.call(context,arr[i],i,arr)
         if(res){
             flag = true

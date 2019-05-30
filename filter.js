@@ -3,7 +3,8 @@ const selfFilter = function (fn, context) {
     let arr = Array.prototype.slice.call(this)
     let filteredArr = []
     for (let i = 0; i < arr.length; i++) {
-        fn.call(context, arr[i], i, this) && filteredArr.push(arr[i])
+        if(!arr.hasOwnProperty(i)) continue;
+         fn.call(context, arr[i], i, this) && filteredArr.push(arr[i])
     }
     return filteredArr
 }
@@ -35,6 +36,5 @@ console.log(arr.selfFilter(item => item === 2))
 
 //当给filter函数传入第二个参数时,第一个参数不能为箭头函数,否则为词法绑定，第二个参数会失效，其他迭代方法同理
 console.log(arr.selfFilter2(function (item) {
-    console.log(this)
     return item === 2
 }, ['a', 'b', 'c']))

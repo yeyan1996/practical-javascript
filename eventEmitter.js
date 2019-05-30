@@ -1,6 +1,6 @@
 //发布订阅
 
-class Dep {
+class EventEmitter {
     constructor() {
         this.subs = {}
     }
@@ -42,7 +42,7 @@ class Dep {
     }
 }
 
-let dep = new Dep()
+let dep = new EventEmitter()
 
 let cb = function () {
     console.log('handleClick')
