@@ -29,6 +29,7 @@ function shuffle2(arr) {
     return _arr
 }
 
+// 分析概率的函数
 function statistics(fn, arr) {
     let times = 100000;
     let res = {};
@@ -39,12 +40,12 @@ function statistics(fn, arr) {
         res[key] ? res[key]++ : res[key] = 1;
     }
 
-// 为了方便展示，转换成百分比
+    // 为了方便展示，转换成百分比
     Object.keys(res).forEach(key => {
         res[key] = res[key] / times * 100 + '%'
     })
 
-    console.log(res)
+    console.log(fn.name,res)
 }
 
 statistics(originSort, [1, 2, 3])

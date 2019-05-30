@@ -20,9 +20,9 @@ function curry(fn) {
     return generator
 }
 
-const add = (a, b, c, d) => a + b + c + d;
-const curriedAdd = curry(add);
-console.log("curriedAdd", curriedAdd(5)(6)(7)(8));
+const display = (a, b, c, d, e) => [a, b, c, d, e];
+const curriedDisplay = curry(display);
+console.log("curriedDisplay", curriedDisplay(1)(2)(3)(4)(5));
 
 
 //ES6简写
@@ -31,8 +31,8 @@ const curry2 = fn => {
     const generator = (...args) => (args.length === fn.length ? fn(...args) : (...args2) => generator(...args, ...args2));
     return generator;
 };
-const curriedAdd2 = curry2(add);
-console.log("curriedAdd2", curriedAdd2(5)(6)(7)(8));
+const curriedDisplay2 = curry2(display);
+console.log("curriedDisplay2", curriedDisplay2(1)(2)(3)(4)(5));
 
 
 /**
@@ -51,13 +51,15 @@ const curry3 = (fn, placeholder = "_") => {
             let placeholderIndex = argsList.findIndex(arg => arg === curry3.placeholder)
             if (placeholderIndex < 0) { // 如果没有占位符直接往数组末尾放入一个元素
                 currentPlaceholderIndex = argsList.push(arg) - 1
-            } else if (placeholderIndex !== currentPlaceholderIndex) {  // 防止将真实元素填充到当前轮参数的占位符
+                // 防止将元素填充到当前轮参数的占位符
+                // (1,'_')('_',2) 数字2应该填充1后面的占位符，不能是2前面的占位符
+            } else if (placeholderIndex !== currentPlaceholderIndex) {
                 argsList[placeholderIndex] = arg
             } else {
                 argsList.push(arg)
             }
         })
-        let realArgList = argsList.filter(arg => arg !== curry3.placeholder) //过滤出不含占位符的真实数组
+        let realArgList = argsList.filter(arg => arg !== curry3.placeholder) //过滤出不含占位符的数组
         if (realArgList.length === fn.length) {
             return fn(...argsList)
         } else if (realArgList.length > fn.length) {
@@ -69,8 +71,8 @@ const curry3 = (fn, placeholder = "_") => {
 
     return generator
 }
-const curriedAdd3 = curry3(add);
-console.log("curriedAdd3", curriedAdd3('_', 6)(5, '_')(7)(8))
+const curriedDisplay3 = curry3((a, b, c, d, e, f, g, h) => [a, b, c, d, e, f, g, h]);
+console.log("curriedDisplay3", curriedDisplay3('_', 2)(1, '_')(3)(4, '_',)('_', 5)(6)(7, 8))
 
 
 //函数组合+函数柯里化
@@ -120,10 +122,10 @@ const partialFunc = (func, ...args) => {
 }
 
 
-let partialAdd = partialFunc(add, 1)
-console.log("partialFunc", partialAdd(2, 3, 4))
+let partialDisplay = partialFunc(display, 1, 2)
+console.log("partialFunc", partialDisplay(3, 4, 5))
 
 
-let partialAdd2 = partialFunc(add, '_', 2, '_')
-console.log('partialFunc2', partialAdd2(1, 3, 4))
+let partialDisplay2 = partialFunc(display, '_', 2, '_')
+console.log('partialFunc2', partialDisplay2(1, 3, 4, 5))
 

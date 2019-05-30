@@ -17,16 +17,18 @@ function promisify(asyncFunc) {
     };
 }
 
-
-const readFileAsync = promisify(fs.readFile)
-const writeFileAsync = promisify(fs.writeFile)
+const fsp = new Proxy(fs,{
+    get(target, key) {
+        return promisify(target[key])
+    }
+})
 
 
 async function generateCommit() {
     try {
-        let data = await readFileAsync('./promisify.js', 'utf-8')
+        let data = await fsp.readFile('./promisify.js', 'utf-8')
         data += `\n//我是注释`
-        await writeFileAsync('./promisify.js', data)
+        await fsp.writeFile('./promisify.js', data)
     } catch (e) {
         console.log(e)
     }
