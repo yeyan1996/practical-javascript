@@ -10,4 +10,4 @@ Array.selfIsArray || (Object.defineProperty(Array, 'selfIsArray', {
 }))
 
 const isNull = isType('Null')
-isNull(null) // true
+console.log(isNull(null)); // true
