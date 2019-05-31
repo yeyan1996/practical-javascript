@@ -5,7 +5,9 @@ const selfReduce = function (fn, initialValue) {
     let res = arr[0]
     for (let i = 0; i < arr.length - 1; i++) {
         if(!arr.hasOwnProperty(i+1)) continue;
-        res = fn.call(null, res, arr[i + 1], i, arr)
+        // 当初始值不存在时，下标从 1 开始计算
+        // 当初始值存在时，下标从 0 开始计算
+        res = fn.call(null, res, arr[i + 1], initialValue === undefined ? i+1 : i, arr)
     }
     return res
 }

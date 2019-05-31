@@ -1,7 +1,7 @@
 // async/await 优雅处理方式
-async function errorCaptured(asyncFunc) {
+async function errorCaptured(promise) {
     try {
-        let res = await asyncFunc
+        let res = await promise
         return [null,res]
     } catch (e) {
         return [e,null]
