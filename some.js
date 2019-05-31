@@ -6,7 +6,7 @@ const selfSome = function (fn, context) {
     let flag = false
     for (let i = 0; i < arr.length; i++) {
         if(!arr.hasOwnProperty(i)) continue;
-        let res = fn.call(context,arr[i],i,arr)
+        let res = fn.call(context,arr[i],i,this)
         if(res){
             flag = true
             break

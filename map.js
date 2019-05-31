@@ -34,5 +34,6 @@ Array.prototype.selfMap2 || (Object.defineProperty(Array.prototype, 'selfMap2', 
 }))
 
 let arr = ['z', 'h', 'l']
+
 console.log(arr.selfMap(item => item + "1"))
-console.log(selfMap2.call({}, item => item + "1"))
+console.log(selfMap2.call({0:'a',1:'b',length:2}, item => item + "1")) // map 方法同样支持类数组
