@@ -1,5 +1,6 @@
 # JavaScript
-some skill about JavaScript
+
+一个合格的中级前端工程师必须要掌握的 JavaScript 技巧
 
 [博客地址](https://juejin.im/post/5cef46226fb9a07eaf2b7516)
 

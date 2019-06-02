@@ -1,39 +1,25 @@
 // ES5循环实现reduce
 
-/**
- * @description 找到第一个非 empty 的元素的下标
- * @param {Array} arr -参数说明
- * @param {Number} [initIndex] -遍历的起始下标
- * @return {Number} 真实元素的下标
- **/
-const findRealElementIndex = function (arr, initIndex) {
-    let index
-    for (let i = initIndex || 0; i < arr.length; i++) {
-        if (!arr.hasOwnProperty(i)) continue;
-        index = i
-        break
-    }
-    return index
-}
-
-const selfReduce = function (fn, initialValue) {
+Array.prototype.selfReduce = function(fn, initialValue) {
     let arr = Array.prototype.slice.call(this)
-    let res;
-
-    if (initialValue === undefined) {
-        res = arr[findRealElementIndex(arr)]
-        for (let i = 0; i < arr.length - 1; i++) {
-            if (!arr.hasOwnProperty(i)) continue;
-            // reduce 遍历时，需要跳过稀疏元素，找到最近一个非稀疏元素
-            let realElementIndex = findRealElementIndex(arr, i + 1)
-            res = fn.call(null, res, arr[realElementIndex], realElementIndex, this)
+    let res
+    let startIndex
+    if(initialValue === undefined) {
+        // 找到第一个非空单元（真实）的元素和下标
+        for(let i = 0; i < arr.length; i++){
+            if(!arr.hasOwnProperty(i))continue
+            startIndex = i
+            res = arr[i]
+            break
         }
-    } else {
+    }else{
         res = initialValue
-        for (let i = 0; i < arr.length; i++) {
-            if (!arr.hasOwnProperty(i)) continue;
-            res = fn.call(null, res, arr[i], i, this)
-        }
+    }
+    // 遍历的起点为上一步中找到的真实元素后面一个真实元素
+    // 每次遍历会跳过空单元的元素
+    for(let i = ++startIndex || 0; i < arr.length; i++){
+        if(!arr.hasOwnProperty(i))continue
+        res = fn.call(null, res, arr[i], i, this)
     }
     return res
 }

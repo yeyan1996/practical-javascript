@@ -19,7 +19,7 @@ speed(fibonacci, 35)
 const memory = function (fn) {
     let obj = {}
     return function (n) {
-        if (!obj[n]) obj[n] = fn(n)
+        if (obj[n] === undefined) obj[n] = fn(n)
         return obj[n]
     }
 }
