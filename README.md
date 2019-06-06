@@ -24,3 +24,4 @@
 * [x] 优雅处理 async/await
 * [x] JSON.stringify 实现
 * [x] koa2中间件原理 koa-compose
+* [x] promise相关的api的实现(all,race,finally)
