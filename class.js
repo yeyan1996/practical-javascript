@@ -56,7 +56,7 @@ function inherit(subType, superType) {
             configurable: true,
             writable: true,
             // 指向子类，和默认的继承行为保持一致
-            value: subType.constructor
+            value: subType
         }
     })
     //子构造函数继承父构造函数(子类继承父类的静态方法和静态属性)
