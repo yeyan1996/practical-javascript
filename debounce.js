@@ -14,9 +14,7 @@
  **/
 
 const debounce = (func, time = 17, options = {
-    // leading 和 trailing 无法同时为 false
     leading: true,
-    trailing: true,
     context: null
 }) => {
     let timer;
@@ -27,7 +25,7 @@ const debounce = (func, time = 17, options = {
         if (options.leading && !timer) {
             timer = setTimeout(null, time)
             func.apply(options.context, args)
-        } else if (options.trailing) {
+        }else{
             timer = setTimeout(() => {
                 func.apply(options.context, args)
                 timer = null
