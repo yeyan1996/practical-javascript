@@ -1,11 +1,11 @@
-// ES5循环实现map
+// 循环实现map
 const selfMap = function (fn, context) {
     let arr = Array.prototype.slice.call(this)
-    let mappedArr = []
+    let mappedArr = Array(arr.length -1)
     for (let i = 0; i < arr.length; i++) {
         // 判断稀疏数组的情况
         if (!arr.hasOwnProperty(i)) continue;
-        mappedArr.push(fn.call(context, arr[i], i, this))
+        mappedArr[i] = fn.call(context, arr[i], i, this)
     }
     return mappedArr
 }
@@ -34,6 +34,5 @@ Array.prototype.selfMap2 || (Object.defineProperty(Array.prototype, 'selfMap2', 
 }))
 
 let arr = ['z', 'h', 'l']
-
 console.log(arr.selfMap(item => item + "1"))
 console.log(selfMap2.call({0:'a',1:'b',length:2}, item => item + "1")) // map 方法同样支持类数组
