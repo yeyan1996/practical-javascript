@@ -1,3 +1,5 @@
+const display = (a, b, c, d, e, f, g, h) => [a, b, c, d, e, f, g, h];
+
 /**
  * @description 函数柯里化（根据柯里化前的函数的参数数量决定柯里化后的函数需要执行多少次）
  * @param {function} fn -柯里化的函数
@@ -19,12 +21,13 @@ function curry(fn) {
     return generator
 }
 
-const display = (a, b, c, d, e, f, g, h) => [a, b, c, d, e, f, g, h];
 const curriedDisplay = curry(display);
 console.log("curriedDisplay", curriedDisplay(1)(2)(3)(4)(5)(6)(7)(8));
 
 
-//ES6简写
+
+
+// ES6简写
 const curry2 = fn => {
     if (fn.length <= 1) return fn;
     const generator = (...args) => (args.length === fn.length ? fn(...args) : (...args2) => generator(...args, ...args2));
@@ -34,11 +37,14 @@ const curriedDisplay2 = curry2(display);
 console.log("curriedDisplay2", curriedDisplay2(1)(2)(3)(4)(5)(6)(7)(8));
 
 
+
+
 /**
  * @description 函数柯里化（支持占位符版本）
  * @param {function} fn -柯里化的函数
  * @param {String} [placeholder = "_"] -占位符
  */
+
 const curry3 = (fn, placeholder = "_") => {
     curry3.placeholder = placeholder
     if (fn.length <= 1) return fn;
@@ -58,10 +64,8 @@ const curry3 = (fn, placeholder = "_") => {
             }
         })
         let realArgsList = argsList.filter(arg => arg !== curry3.placeholder) //过滤出不含占位符的数组
-        if (realArgsList.length === fn.length) {
+        if (realArgsList.length >= fn.length) {
             return fn(...argsList)
-        } else if (realArgsList.length > fn.length) {
-            throw new Error('超出初始函数参数最大值')
         } else {
             return generator
         }
@@ -69,11 +73,17 @@ const curry3 = (fn, placeholder = "_") => {
 
     return generator
 }
+
 const curriedDisplay3 = curry3(display);
-console.log("curriedDisplay3", curriedDisplay3('_', 2)(1, '_',4)(3, '_',)('_', 5)(6)(7, 8))
+console.log("curriedDisplay3", curriedDisplay3('_', 2)(1, '_', 4)(3, '_',)('_', 5)(6)(7, 8))
 
 
-//函数组合+函数柯里化
+
+
+/**
+ * @example 函数组合 + 函数柯里化
+ **/
+
 const compose = function (...fns) {
     return function (initValue) {
         return fns.reduceRight((acc, cur) => {
@@ -95,34 +105,27 @@ const composeFunc = compose(
 
 console.log("compose + curry", composeFunc('helloworld'))
 
-/**
- * @description 偏函数（创建已经设置好一个或多个参数的函数,并且添加了占位符功能）
- * @param {Function} func -部分求值的函数
- * @param {...*} [args] -部分求值的参数
- * @return {Function} -部分求值后的函数
+
+
+
+
+/**z
+ * @example  通过占位符将路径参数延迟到之后传入
  **/
 
-const partialFunc = (func, ...args) => {
-    let placeholderNum = 0
-    return (...args2) => {
-        args2.forEach(arg => {
-            let index = args.findIndex(item => item === "_")
-            if (index < 0) return
-            args[index] = arg
-            placeholderNum++
-        })
-        if (placeholderNum < args2.length) {
-            args2 = args2.slice(placeholderNum, args2.length)
-        }
-        return func.apply(this, [...args, ...args2])
+if (!window) {
+    const {readFile} = require("fs")
+    const {join} = require("path")
+
+    const callback = (err, data) => {
+        err ? console.error(err) : console.log(data)
     }
+
+    ['curry.js', 'curry.html'] // 将文件列表变成数组方便管理和维护
+        .map(file => join(__dirname, file)) // join 函数无法使用柯里化因为参数都是可选参数，length 为 0
+        .map(curry3(readFile)('_', 'utf-8', callback))
+
+} else {
+    console.warn('请使用 nodejs 环境运行以下代码')
 }
-
-
-let partialDisplay = partialFunc(display, 1, 2)
-console.log("partialFunc", partialDisplay(3, 4, 5, 6, 7, 8))
-
-
-let partialDisplay2 = partialFunc(display, '_', 2, '_')
-console.log('partialFunc2', partialDisplay2(1, 3, 4, 5, 6, 7, 8))
 
