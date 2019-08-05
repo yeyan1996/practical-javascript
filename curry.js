@@ -109,7 +109,7 @@ console.log("compose + curry", composeFunc('helloworld'))
 
 
 
-/**z
+/**
  * @example  通过占位符将路径参数延迟到之后传入
  **/
 
