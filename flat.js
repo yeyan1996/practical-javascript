@@ -1,11 +1,11 @@
 // reduce实现 Array.prototype.flat，数组扁平化
 const selfFlat = function (depth = 1) {
     let arr = Array.prototype.slice.call(this)
-    if(depth === 0 ) return arr
+    if (depth === 0) return arr
     return arr.reduce((pre, cur) => {
         if (Array.isArray(cur)) {
             // 需要用 call 绑定 this 值，否则会指向 window
-            return [...pre, ...selfFlat.call(cur,depth-1)]
+            return [...pre, ...selfFlat.call(cur, depth - 1)]
         } else {
             return [...pre, cur]
         }

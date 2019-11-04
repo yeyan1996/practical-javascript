@@ -37,14 +37,26 @@ const selfRace = iterator => {
     })
 }
 
+// const selfAllSettled = iterator => {
+//     if (!iterator[Symbol.iterator]) throw new Error('argument is not iterable')
+//     return new Promise((resolve,reject) => {
+//
+//     })
+// }
+
 // finally 满足:
 // finally 的 callback 不会接受任何参数
 // finally 的回调如果返回一个 promise，那 finally 会等待回调中的 promise 决议完成再决议自身
 // finally 返回一个 promise，并且 promise 的值是 finally 之前第一个非 finally 返回的 promise 解析后的值
-// Promise.resolve(1).finally(()=>{}).then(res=>console.log(res)) // 1
+// e.g: Promise.resolve(1).finally(()=>{}).then(res=>console.log(res)) // 打印 1
+
 const selfFinally = function (callback) {
     if (!isFunction(callback)) callback = () => {}
+    // 通过 then 实现等待前面的 promise 执行完毕再执行 callback 的操作
+    // 同时 finally 也返回一个 promise 支持继续链式调用
     return this.then(
+        // 通过 Promise.resolve 实现若 callback 是一个 promise 则等待 promise 决议后决议 finally 这个 promise
+        // 通过 then 返回 res 实现存储上一个非 finally 的 promise 决议的值
         res => Promise.resolve(callback()).then(() => res),
         err => Promise.resolve(callback()).then(() => {
             throw err
@@ -66,6 +78,13 @@ Promise.selfRace || (Object.defineProperty(Promise, 'selfRace', {
     configurable: true,
     writable: true
 }))
+
+// Promise.selfAllSettled || (Object.defineProperty(Promise, 'selfAllSettled', {
+//     value: selfAllSettled,
+//     enumerable: false,
+//     configurable: true,
+//     writable: true
+// }))
 
 Promise.prototype.selfFinally || (Object.defineProperty(Promise.prototype, 'selfFinally', {
     value: selfFinally,

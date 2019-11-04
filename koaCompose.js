@@ -52,6 +52,5 @@ function asyncFunc(duration) {
     })
 }
 
-let composedFunc = compose(app.middleware)
-let ctx = {}
-composedFunc(ctx)
+const composedFunc = compose(app.middleware)
+composedFunc({})
