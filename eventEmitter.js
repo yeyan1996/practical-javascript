@@ -19,7 +19,7 @@ class EventEmitter {
     once(event, onceCb) {
         const cb = (...args) => {
             onceCb(...args)
-            this.off(event, onceCb)
+            this.off(event, cb)
         }
         this.on(event,cb)
     }

@@ -34,7 +34,8 @@ Array.prototype.selfFilter2 || (Object.defineProperty(Array.prototype, 'selfFilt
 let arr = [1, 2, 3]
 console.log(arr.selfFilter(item => item === 2))
 
-//当给filter函数传入第二个参数时,第一个参数不能为箭头函数,否则为词法绑定，第二个参数会失效，其他迭代方法同理
+// 当给filter函数传入第二个参数时,第一个参数不能为箭头函数
+// 否则由于词法绑定，第二个参数会失效，其他迭代方法同理
 console.log(arr.selfFilter2(function (item) {
     return item === 2
 }, ['a', 'b', 'c']))

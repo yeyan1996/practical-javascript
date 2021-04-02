@@ -37,7 +37,7 @@ function run(generatorFunc) {
     return new Promise((resolve, reject) => {
         const next = function (result) {
             if (result.done) {
-                resolve(result.value)
+               return resolve(result.value)
             }
             //保证返回的是一个promise
             result.value = makePromisify(result.value)

@@ -13,7 +13,7 @@ const selfBind = function (bindTarget, ...args1) {
             //否则返回新建的对象
             return this
         } else {
-            originFunc.call(bindTarget, ...args1, ...args2)
+            return originFunc.call(bindTarget, ...args1, ...args2)
         }
     }
     /**
