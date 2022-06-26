@@ -37,7 +37,7 @@ speed(fibonacci, 35)
  **/
 function fibonacci_DP(n) {
     let res = 1
-    if (n === 1 && n === 2) return res
+    if (n === 1 || n === 2) return res
     n = n - 2
     let cur = 1
     let pre = 1
