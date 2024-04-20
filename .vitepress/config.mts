@@ -1,0 +1,27 @@
+import { defineConfig } from 'vitepress'
+
+// https://vitepress.dev/reference/site-config
+export default defineConfig({
+  title: "Practical JavaScript",
+  description: "A VitePress Site",
+  themeConfig: {
+    // https://vitepress.dev/reference/default-theme-config
+    nav: [
+      { text: 'Home', link: '/' },
+      { text: 'Source Code', link: '/source-code' }
+    ],
+
+    sidebar: [
+      {
+        text: 'Source Code',
+        items: [
+          { text: 'assign', link: '/src/assign/assign.md' },
+        ]
+      }
+    ],
+
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/yeyan1996/practical-javascript' }
+    ]
+  }
+})

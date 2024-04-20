@@ -1,6 +1,6 @@
 # 28 JavaScript Skills a Qualified Intermediate Front-End Engineer Needs to Master
 
-English | [中文](./README-zh_CN.md)
+English | [中文](README-zh_CN.md)
 
 [Blog](https://medium.com/javascript-in-plain-english/28-javascript-skills-a-qualified-intermediate-front-end-engineer-needs-to-master-ffed93de3f38)
 

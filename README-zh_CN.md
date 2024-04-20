@@ -1,6 +1,6 @@
 # 一名合格的中级前端工程师需要掌握的28项 JavaScript 技能
 
-[English](./README.md) | 中文
+[English](README.md) | 中文
 
 [博客](https://juejin.im/post/5cef46226fb9a07eaf2b7516)
 
