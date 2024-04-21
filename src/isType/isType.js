@@ -3,10 +3,10 @@ const isType = type => target => `[object ${type}]` === Object.prototype.toStrin
 const selfIsArray = isType('Array')
 
 Array.selfIsArray || (Object.defineProperty(Array, 'selfIsArray', {
-    value: selfIsArray,
-    enumerable: false,
-    configurable: true,
-    writable: true
+  value: selfIsArray,
+  enumerable: false,
+  configurable: true,
+  writable: true,
 }))
 
-console.log(selfIsArray([])); // true
+console.log(selfIsArray([])) // true

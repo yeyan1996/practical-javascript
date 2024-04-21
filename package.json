@@ -1,17 +1,22 @@
 {
   "name": "practical-javascript",
   "version": "1.0.0",
+  "license": "MIT",
   "repository": {
     "url": "https://github.com/yeyan1996/practical-javascript"
   },
   "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview"
   },
-  "license": "MIT",
   "devDependencies": {
+    "@antfu/eslint-config": "^2.15.0",
+    "eslint": "^9.1.0",
+    "typescript": "^5.4.5",
     "vitepress": "^1.1.3"
   }
 }
