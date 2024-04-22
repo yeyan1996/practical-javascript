@@ -1,5 +1,4 @@
 import fs from 'node:fs'
-import path from 'node:path'
 import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
@@ -16,10 +15,10 @@ export default defineConfig({
     sidebar: [
       {
         text: 'Source Code',
-        items: fs.readdirSync(new URL('../src', import.meta.url)).filter(i => path.extname(i) === '.md').map(dirname => ({ text: dirname, link: `/src/${dirname}/${dirname}.md` })),
+        items: fs.readdirSync(new URL('../src', import.meta.url))
+          .map((dirname: string) => ({ text: dirname, link: `/src/${dirname}/${dirname}.md` })),
       },
     ],
-
     socialLinks: [
       { icon: 'github', link: 'https://github.com/yeyan1996/practical-javascript' },
     ],

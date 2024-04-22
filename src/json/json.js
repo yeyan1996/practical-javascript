@@ -80,12 +80,12 @@ const jsonStringify = (function () {
         // In case of arrays
         res += '['
         const temp = [] // 声明一个临时数组用来控制属性之间的逗号
-                        // A temporary array to manage commas between properties
+        // A temporary array to manage commas between properties
         obj.forEach((value) => {
           temp.push(
-              isComplexDataType(value) && !isFunction(value)
-                  ? jsonStringify(value)
-                  : `${processSpecialValueInArray(value, true)}`,
+            isComplexDataType(value) && !isFunction(value)
+              ? jsonStringify(value)
+              : `${processSpecialValueInArray(value, true)}`,
           )
         })
         res += `${temp.join(',')}]`
@@ -127,8 +127,8 @@ const jsonStringify = (function () {
       return
     }
     else {
-  // 非 Symbol 的基本类型直接返回
-                 // Directly return for non-Symbol basic types
+      // 非 Symbol 的基本类型直接返回
+      // Directly return for non-Symbol basic types
       return obj
     }
     return res

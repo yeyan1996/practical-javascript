@@ -61,14 +61,14 @@ const selfFinally = function (callback) {
   // 同时 finally 也返回一个 promise 支持继续链式调用
   // Also, finally returns a promise supporting continued chaining
   return this.then(
-      // 通过 Promise.resolve 实现若 callback 是一个 promise 则等待 promise 决议后决议 finally 这个 promise
-      // Use Promise.resolve to ensure if the callback is a promise, wait for it to resolve before resolving the finally promise
-      // 通过 then 返回 res 实现存储上一个非 finally 的 promise 决议的值
-      // Use then to return res to store the resolved value of the previous non-finally promise
-      res => Promise.resolve(callback()).then(() => res),
-      err => Promise.resolve(callback()).then(() => {
-        throw err
-      }),
+    // 通过 Promise.resolve 实现若 callback 是一个 promise 则等待 promise 决议后决议 finally 这个 promise
+    // Use Promise.resolve to ensure if the callback is a promise, wait for it to resolve before resolving the finally promise
+    // 通过 then 返回 res 实现存储上一个非 finally 的 promise 决议的值
+    // Use then to return res to store the resolved value of the previous non-finally promise
+    res => Promise.resolve(callback()).then(() => res),
+    err => Promise.resolve(callback()).then(() => {
+      throw err
+    }),
   )
 }
 
@@ -118,18 +118,18 @@ const promise4 = new Promise((_, reject) => {
 })
 
 Promise.selfAll([promise1, promise2, promise3, promise4])
-    .then(res => console.log(res))
-    .catch(err => console.log(`promise all:${err}`))
+  .then(res => console.log(res))
+  .catch(err => console.log(`promise all:${err}`))
 
 Promise.selfRace([promise1, promise2, promise3, promise4])
-    .then(res => console.log(`promise race:${res}`))
+  .then(res => console.log(`promise race:${res}`))
 
 Promise.resolve('promise finally:ok')
-    .selfFinally()
-    .selfFinally(() => {})
-    .then(res => console.log(res)) // 1
+  .selfFinally()
+  .selfFinally(() => {})
+  .then(res => console.log(res)) // 1
 
 Promise.resolve('promise finally:ok')
-    .finally()
-    .finally(() => {})
-    .then(res => console.log(res)) // 1
+  .finally()
+  .finally(() => {})
+  .then(res => console.log(res)) // 1

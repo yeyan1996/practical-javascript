@@ -3,7 +3,7 @@
 // 适合err-first风格的异步操作(eg. nodejs)的 promisify 通用函数
 // Generic promisify function suitable for err-first style asynchronous operations (e.g., nodejs)
 
-const fs= require('node:fs')
+const fs = require('node:fs')
 
 function promisify(asyncFunc) {
   return function (...args) {

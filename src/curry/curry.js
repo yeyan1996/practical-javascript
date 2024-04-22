@@ -108,9 +108,9 @@ const curriedMap = curry3((fn, arr) => arr.map(fn))
 const curriedSplit = curry3((separator, str) => str.split(separator))
 
 const composeFunc = compose(
-    curriedJoin('1'),
-    curriedMap(item => `${item}1`),
-    curriedSplit(''),
+  curriedJoin('1'),
+  curriedMap(item => `${item}1`),
+  curriedSplit(''),
 )
 
 console.log('compose + curry', composeFunc('helloworld'))
@@ -129,10 +129,10 @@ if (!window) {
   }
 
   ['curry.js', 'curry.html'] // 将文件列表变成数组方便管理和维护
-      // Turn the file list into an array for easier management and maintenance
-      .map(file => join(__dirname, file)) // join 函数无法使用柯里化因为参数都是可选参数，length 为 0
-      // The join function cannot be curried because all parameters are optional, length is 0
-      .map(curry3(readFile)('_', 'utf-8', callback))
+  // Turn the file list into an array for easier management and maintenance
+    .map(file => join(__dirname, file)) // join 函数无法使用柯里化因为参数都是可选参数，length 为 0
+  // The join function cannot be curried because all parameters are optional, length is 0
+    .map(curry3(readFile)('_', 'utf-8', callback))
 }
 else {
   console.warn('请使用 nodejs 环境运行以下代码')
