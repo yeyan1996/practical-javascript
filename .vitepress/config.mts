@@ -9,16 +9,11 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Source Code', link: '/source-code' },
+      { text: 'Source Code', link: '/src/assign/assign.md' },
     ],
 
-    sidebar: [
-      {
-        text: 'Source Code',
-        items: fs.readdirSync(new URL('../src', import.meta.url))
-          .map((dirname: string) => ({ text: dirname, link: `/src/${dirname}/${dirname}.md` })),
-      },
-    ],
+    sidebar: fs.readdirSync(new URL('../src', import.meta.url))
+        .map((dirname: string) => ({ text: dirname, link: `/src/${dirname}/${dirname}.md` })),
     socialLinks: [
       { icon: 'github', link: 'https://github.com/yeyan1996/practical-javascript' },
     ],
