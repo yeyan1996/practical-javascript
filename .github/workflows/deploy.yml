@@ -37,18 +37,17 @@ jobs:
         uses: pnpm/action-setup@v4.0.0
         with:
           node-version: 20
-          cache: pnpm # or pnpm / yarn
+          cache: pnpm
           # Version of pnpm to install
           version: 9 # optional
-          # Where to store pnpm files
 
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Install dependencies
-        run: npm ci # or pnpm install / yarn install / bun install
+        run: pnpm install
       - name: Build with VitePress
-        run: npm run docs:build # or pnpm docs:build / yarn docs:build / bun run docs:build
+        run: pnpm docs:build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
