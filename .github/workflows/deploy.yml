@@ -36,7 +36,6 @@ jobs:
       - name: Setup Node
         uses: pnpm/action-setup@v4.0.0
         with:
-          node-version: 20
           cache: pnpm
           # Version of pnpm to install
           version: 9 # optional

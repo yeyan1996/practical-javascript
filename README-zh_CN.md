@@ -2,7 +2,7 @@
 
 [English](README.md) | 中文
 
-[博客](https://juejin.im/post/5cef46226fb9a07eaf2b7516)
+[网站](https://yeyan1996.github.io/practical-javascript/README-zh_CN.html) | [博客](https://juejin.im/post/5cef46226fb9a07eaf2b7516)
 
 * [x] 数组Api的内部原理
 * [x] reduce实现数组的Api
