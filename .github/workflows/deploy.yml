@@ -38,6 +38,10 @@ jobs:
         with:
           node-version: 20
           cache: pnpm # or pnpm / yarn
+          # Version of pnpm to install
+          version: 9 # optional
+          # Where to store pnpm files
+
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
