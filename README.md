@@ -1,4 +1,4 @@
-# 28 JavaScript Skills a Qualified Intermediate Front-End Engineer Needs to Master
+# 28 JavaScript Skills that a Front-End Engineer Needs to Master
 
 English | [中文](README-zh_CN.md)
 
