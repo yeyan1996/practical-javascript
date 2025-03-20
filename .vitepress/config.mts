@@ -5,7 +5,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'Practical JavaScript',
   description: 'A VitePress Site',
-  base: "/practical-javascript/",
+  base: '/practical-javascript/',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -14,7 +14,7 @@ export default defineConfig({
     ],
 
     sidebar: fs.readdirSync(new URL('../src', import.meta.url))
-        .map((dirname: string) => ({ text: dirname, link: `/src/${dirname}/${dirname}.md` })),
+      .map((dirname: string) => ({ text: dirname, link: `/src/${dirname}/${dirname}.md` })),
     socialLinks: [
       { icon: 'github', link: 'https://github.com/yeyan1996/practical-javascript' },
     ],

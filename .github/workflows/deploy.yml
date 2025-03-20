@@ -40,7 +40,6 @@ jobs:
           # Version of pnpm to install
           version: 9 # optional
 
-
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Install dependencies

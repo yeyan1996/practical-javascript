@@ -79,12 +79,12 @@ console.log(obj)
 boundFunc()
 console.log(obj)
 
-function originFunc2() {
+function OriginFunc2() {
   this.name = 'yeyan1996'
 }
 
-const boundFunc2 = originFunc2.selfBind({})
+const boundFunc2 = OriginFunc2.selfBind({})
 const instance = new boundFunc2()
 // 将绑定后的函数作为构造函数，生成的对象的 __proto__ 指向绑定前函数的 prototype
 // When the bound function is used as a constructor, the __proto__ of the generated object points to the prototype of the function before binding
-console.log(instance.__proto__ === originFunc2.prototype)
+console.log(Object.getPrototypeOf(instance) === OriginFunc2.prototype)

@@ -113,7 +113,7 @@ const promise3 = new Promise((resolve) => {
 
 const promise4 = new Promise((_, reject) => {
   setTimeout(() => {
-    reject('err')
+    reject(new Error('err'))
   }, 1500)
 })
 

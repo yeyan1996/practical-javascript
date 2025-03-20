@@ -6,7 +6,7 @@ const selfMap = function (fn, context) {
   for (let i = 0; i < arr.length; i++) {
     // 判断稀疏数组的情况
     // Check for sparse array cases
-    if (!arr.hasOwnProperty(i))
+    if (!Object.prototype.hasOwnProperty.call(arr, i))
       continue
     mappedArr[i] = fn.call(context, arr[i], i, this)
   }
